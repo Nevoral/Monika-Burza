@@ -7,6 +7,8 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    
+    <link rel = "stylesheet" href = "{{ url_for('static', filename='CSS/style.css') }}">
 
     <title>{% block title %}{% endblock %}</title>
   </head>
@@ -18,14 +20,15 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/home">Nástěnka</a>
-            </li>
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="/product/{{user.username}}">Tvé produkty</a>
-            </li>
-            {% endif %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/home">Nástěnka</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="/product">Tvé produkty</a>
+            <a class="nav-link" href="/product/{{user.username}}">Tvé produkty</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
       <p align="right">
@@ -48,25 +51,25 @@
         </ul>
       </p>
     </nav>
-    {% with messages = get_flashed_messages(with_categories=True) %}
-      {% if messages %}
-        {% for category, message in messages %}
-        {% if category == "error" %}
-        <div class="alert alert-danger alter-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        {% else %}
-        <div class="alert alert-success alter-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        {% endif %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+    {% for category, message in messages %}
+    {% if category == "error" %}
+    <div class="alert alert-danger alter-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
 
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    <div>{% block content %}{% endblock %}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<div>{% block content %}{% endblock %}</div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -84,5 +87,5 @@
       background-color: #212121;
       color: white
     }
-</style>
+  </style>
 </html>
