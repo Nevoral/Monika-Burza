@@ -1,5 +1,44 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-<h1>register</h1>
+<form method="POST">
+  <h3 align="center">Registrace</h3>
+  <div class="form-group">
+    <label for="email">Emailová adresa</label>
+    <input
+      type="text"
+      id="email"
+      name="email"
+      class="form-control"
+      placeholder="Vložte email"
+    />
+    <label for="username">Uživatelské jméno</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      class="form-control"
+      placeholder="Vložte uživatelské jméno"
+    />
+    <label for="password1">Heslo</label>
+    <input
+      type="password"
+      id="password1"
+      name="password1"
+      class="form-control"
+      placeholder="Vložte heslo"
+    />
+    <label for="password2">Zopakujte heslo</label>
+    <input
+      type="password"
+      id="password2"
+      name="password2"
+      class="form-control"
+      placeholder="Vložte heslo znovu"
+    />
+    <br />
+    <div align="center">
+      <button class="btn btn-primary" type="submit">Registrovat</button>
+    </div>
+  </div>
 {% endblock %}

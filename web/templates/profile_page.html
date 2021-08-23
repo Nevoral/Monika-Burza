@@ -1,6 +1,61 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-<h1>profile</h1>
-<h1>profile</h1>
+<form method="POST">
+    <h3 align="center">Profil {{user.username}}</h3>
+    <div class="form-group">
+      <label for="email">Emailová adresa</label>
+      <input
+        type="text"
+        id="email"
+        name="email"
+        class="form-control"
+        placeholder="{{user.email}}"
+      />
+      <label for="username">Uživatelské jméno</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        class="form-control"
+        placeholder="{{user.username}}"
+      />
+      <label for="tel_number">Tel. číslo</label>
+      <input
+        type="text"
+        id="tel_number"
+        name="tel_number"
+        class="form-control"
+        placeholder="{{user.tel_number}}"
+      />
+      <label for="town">Město</label>
+      <input
+        type="text"
+        id="town"
+        name="town"
+        class="form-control"
+        placeholder="{{user.town}}"
+      />
+      <label for="street">Ulice</label>
+      <input
+        type="text"
+        id="street"
+        name="street"
+        class="form-control"
+        placeholder="{{user.street}}"
+      />
+      <label for="psc">PSČ</label>
+      <input
+        type="text"
+        id="psc"
+        name="psc"
+        class="form-control"
+        placeholder="{{user.psc}}"
+      />
+      <br />
+      <div align="center">
+        <button class="btn btn-primary" type="submit">Uložit</button>
+      </div>
+    </div>
+  </form>
 {% endblock %}

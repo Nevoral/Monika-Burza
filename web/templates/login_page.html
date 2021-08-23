@@ -1,5 +1,29 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-<h1>login</h1>
+<form method="POST">
+    <h3 align="center">Přihlášení</h3>
+    <div class="form-group">
+      <label for="email">Emailová adresa</label>
+      <input
+        type="text"
+        id="email"
+        name="email"
+        class="form-control"
+        placeholder="Vložte email"
+      />
+      <label for="password">Heslo</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="form-control"
+        placeholder="Zadejte heslo"
+      />
+      <br />
+      <div align="center">
+        <button class="btn btn-primary" type="submit">Přihlásit</button>
+      </div>
+    </div>
+  </form>
 {% endblock %}
