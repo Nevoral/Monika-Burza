@@ -75,18 +75,28 @@ def profile(username):
         if tel_exists:
             flash('Telefoní číslo už někdo používá.', category='error')
         else:
-            find_user= User.query.filter_by(username=username).first()
             if email != "":
+                find_user= User.query.filter_by(username=username).first()
                 find_user.email = str(email)
+                db.session.commit()
             if new_username != "":
+                find_user= User.query.filter_by(username=username).first()
                 find_user.username = new_username
+                db.session.commit()
             if tel_number != "":
+                find_user= User.query.filter_by(username=username).first()
                 find_user.tel_number = str(tel_number)
+                db.session.commit()
             if town != "":
+                find_user= User.query.filter_by(username=username).first()
                 find_user.town = town
+                db.session.commit()
             if street != "":
+                find_user= User.query.filter_by(username=username).first()
                 find_user.street = street
+                db.session.commit()
             if psc != "":
+                find_user= User.query.filter_by(username=username).first()
                 find_user.psc = psc
-            db.session.commit()
+                db.session.commit()
     return render_template("profile_page.html", user=current_user, username=username)
