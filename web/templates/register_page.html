@@ -1,44 +1,48 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-<form method="POST">
+
+<div id = "log_reg">
   <h3 align="center">Registrace</h3>
-  <div class="form-group">
-    <label for="email">Emailová adresa</label>
-    <input
-      type="text"
-      id="email"
-      name="email"
-      class="form-control"
-      placeholder="Vložte email"
-    />
-    <label for="username">Uživatelské jméno</label>
-    <input
-      type="text"
-      id="username"
-      name="username"
-      class="form-control"
-      placeholder="Vložte uživatelské jméno"
-    />
-    <label for="password1">Heslo</label>
-    <input
-      type="password"
-      id="password1"
-      name="password1"
-      class="form-control"
-      placeholder="Vložte heslo"
-    />
-    <label for="password2">Zopakujte heslo</label>
-    <input
-      type="password"
-      id="password2"
-      name="password2"
-      class="form-control"
-      placeholder="Vložte heslo znovu"
-    />
-    <br />
-    <div align="center">
-      <button class="btn btn-primary" type="submit">Registrovat</button>
+  <form method="POST">
+    <div class="form-group">
+      <label class = "form_label" for="email">Emailová adresa</label>
+      <input class = "input_bar"
+        type="text"
+        id="email"
+        name="email"
+        class="form-control"
+        placeholder="Vložte email"
+      />
+      <label class = "form_label" for="username">Uživatelské jméno</label>
+      <input class = "input_bar"
+        type="text"
+        id="username"
+        name="username"
+        class="form-control"
+        placeholder="Vložte uživatelské jméno"
+      />
+      <label class = "form_label" for="password1">Heslo</label>
+      <input class = "input_bar"
+        type="password"
+        id="password1"
+        name="password1"
+        class="form-control"
+        placeholder="Vložte heslo"
+      />
+      <label class = "form_label" for="password2">Zopakujte heslo</label>
+      <input class = "input_bar"
+        type="password"
+        id="password2"
+        name="password2"
+        class="form-control"
+        placeholder="Vložte heslo znovu"
+      />
+      <br />
+      <div>
+        <button id = "button1" class="btn btn-primary" type="submit">Registrovat</button>
+      </div>
     </div>
-  </div>
+  </form>
+</div>
 {% endblock %}

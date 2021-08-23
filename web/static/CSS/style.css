@@ -1,0 +1,41 @@
+#top_right{
+    text-align: right;
+}
+
+.navbar-brand{
+    margin-left: 1%;
+}
+
+#log_reg{
+    margin: 10% auto;
+    width: 20vw;
+    height: auto;
+    text-align: center;
+}
+
+.form_label{
+    text-align: left;
+    display: block;
+    width: 90%;
+    margin: 5%;
+    height: 1.3em;
+}
+
+.input_bar{
+    width: 90%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+#button1{
+    display: block;
+    width: 80%;
+    margin: 5% auto 0;
+}
+
+#forget_pass{
+    margin-top: 3%;
+    display: block;
+    width: auto;
+    height: auto;
+}

@@ -1,29 +1,33 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-<form method="POST">
-    <h3 align="center">Přihlášení</h3>
+
+<div id = "log_reg">
+  <h3>Přihlášení</h3>
+  <form method="POST">
     <div class="form-group">
-      <label for="email">Emailová adresa</label>
-      <input
+      <label class = "form_label" for="email">Emailová adresa:</label>
+      <input class = "input_bar"
         type="text"
         id="email"
         name="email"
         class="form-control"
         placeholder="Vložte email"
       />
-      <label for="password">Heslo</label>
-      <input
+      <label class = "form_label" for="password">Heslo:</label>
+      <input class = "input_bar"
         type="password"
         id="password"
         name="password"
         class="form-control"
         placeholder="Zadejte heslo"
       />
-      <br />
-      <div align="center">
-        <button class="btn btn-primary" type="submit">Přihlásit</button>
+      <br/>
+      <a id = "forget_pass" class="text-muted"><small>Zapomenuté heslo</small></a>
+      <div>
+        <button id = "button1" class="btn btn-primary" type="submit">Přihlásit</button>
       </div>
     </div>
   </form>
+</div>
 {% endblock %}
