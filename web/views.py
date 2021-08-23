@@ -68,26 +68,19 @@ def profile(username):
         town = request.form.get("town")
         street = request.form.get("street")
         psc = request.form.get("psc")
+        find_user= User.query.filter_by(username=username).first()
+        if email != "":
+            find_user.email = email
+        if new_username != "":
+            find_user.username = new_username
         if tel_number != "":
-            tel_exists = User.query.filter_by(tel_number=tel_number).first()
-        else:
-            tel_exists = False
-        if tel_exists:
-            flash('Telefoní číslo už někdo používá.', category='error')
-        else:
-            find_user= User.query.filter_by(username=username).first()
-            if email != "":
-                find_user.email = email
-            if new_username != "":
-                find_user.username = new_username
-            if tel_number != "":
-                find_user.tel_number = tel_number
-            if town != "":
-                find_user.town = town
-            if street != "":
-                find_user.street = street
-            if psc != "":
-                find_user.psc = psc
-            db.session.commit()
-            return redirect(url_for('views.home'))
+            find_user.tel_number = tel_number
+        if town != "":
+            find_user.town = town
+        if street != "":
+            find_user.street = street
+        if psc != "":
+            find_user.psc = psc
+        db.session.commit()
+        return redirect(url_for('views.home'))
     return render_template("profile_page.html", user=current_user, username=username)

@@ -1,0 +1,1 @@
+web: gunicorn run:app && python main.py
