@@ -9,9 +9,9 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     tel_number = db.Column(db.String(150), unique=True)
-    town = db.Column(db.String(150), unique=True)
-    street = db.Column(db.String(150), unique=True)
-    psc = db.Column(db.String(150), unique=True)
+    town = db.Column(db.String(150))
+    street = db.Column(db.String(150))
+    psc = db.Column(db.String(150))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     posts = db.relationship('Post', backref='user', passive_deletes=True)
 
