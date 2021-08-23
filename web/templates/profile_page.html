@@ -2,50 +2,52 @@
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
 <form method="POST">
-    <h3 align="center">Profil {{user.username}}</h3>
+  <div class = "log_reg" id = "profil">
+    <h3>Profil uživatele {{user.username}}</h3>
     <div class="form-group">
-      <label for="email">Emailová adresa</label>
-      <input
+      <label class = "form_label_x2" for="email">Emailová adresa</label>
+      <label class = "form_label_x2" for="username">Uživatelské jméno</label></br>
+      <input class = "input_bar_x2"
         type="text"
         id="email"
         name="email"
         class="form-control"
         placeholder="{{user.email}}"
       />
-      <label for="username">Uživatelské jméno</label>
-      <input
+      <input class = "input_bar_x2"
         type="text"
         id="username"
         name="username"
         class="form-control"
         placeholder="{{user.username}}"
       />
-      <label for="tel_number">Tel. číslo</label>
-      <input
+      <label class = "form_label_left" for="tel_number">Tel. číslo</label></br>
+      <input class = "input_bar_left"
         type="text"
         id="tel_number"
         name="tel_number"
         class="form-control"
         placeholder="{{user.tel_number}}"
       />
-      <label for="town">Město</label>
-      <input
+    <h3>Adresa uživatele {{user.username}}</h3>
+      <label class = "form_label_x2" for="town">Město</label>
+      <label class = "form_label_x2" for="street">Ulice</label></br>
+      <input class = "input_bar_x2"
         type="text"
         id="town"
         name="town"
         class="form-control"
         placeholder="{{user.town}}"
       />
-      <label for="street">Ulice</label>
-      <input
+      <input class = "input_bar_x2"
         type="text"
         id="street"
         name="street"
         class="form-control"
         placeholder="{{user.street}}"
       />
-      <label for="psc">PSČ</label>
-      <input
+      <label class = "form_label_left" for="psc">PSČ</label></br>
+      <input class = "input_bar_left"
         type="text"
         id="psc"
         name="psc"
@@ -53,9 +55,10 @@
         placeholder="{{user.psc}}"
       />
       <br />
-      <div align="center">
-        <button class="btn btn-primary" type="submit">Uložit</button>
+      <div>
+        <button id = "button1" class="btn btn-primary" type="submit">Uložit</button>
       </div>
     </div>
-  </form>
+  </div>
+</form>
 {% endblock %}

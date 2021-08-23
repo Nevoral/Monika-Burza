@@ -1,28 +1,29 @@
-#top_right{
-    text-align: right;
-}
-
 .navbar-brand{
     margin-left: 1%;
 }
 
-#log_reg{
-    margin: 10% auto;
+.log_reg{
+    margin: 5% auto 0;
     width: 20vw;
     height: auto;
     text-align: center;
+}
+
+.log_reg h3{
+    margin: 3% 0 0;
 }
 
 .form_label{
     text-align: left;
     display: block;
     width: 90%;
-    margin: 5%;
     height: 1.3em;
+    margin: 5% 5% 3%;
 }
 
 .input_bar{
     width: 90%;
+    height: 2.2em;
     margin: 0 auto;
     text-align: left;
 }
@@ -38,4 +39,41 @@
     display: block;
     width: auto;
     height: auto;
+}
+
+#profil{
+    width: 45vw;
+    height: auto; 
+}
+
+.input_bar_x2{
+    display: inline-block;
+    width: 40%;
+    height: 2.2em;
+    margin: 0 4%;
+    text-align: left;
+}
+
+.input_bar_left{
+    display: inline-block;
+    width: 40%;
+    height: 2.2em;
+    margin: 0 4%;
+    margin: 0 52% 0 4%;
+}
+
+.form_label_x2{
+    display: inline-block;
+    text-align: left;
+    width: 40%;
+    height: 1.3em;
+    margin: 3% 4% 3%;
+}
+
+.form_label_left{
+    display: inline-block;
+    text-align: left;
+    width: 40%;
+    height: 1.3em;
+    margin: 3% 52% 3% 4%;
 }
