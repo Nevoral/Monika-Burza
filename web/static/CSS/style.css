@@ -41,6 +41,7 @@
     height: auto;
 }
 
+
 #profil{
     width: 45vw;
     height: auto; 
@@ -76,4 +77,36 @@
     width: 40%;
     height: 1.3em;
     margin: 3% 52% 3% 4%;
+}
+
+
+#menu_bar{
+    width: 95%;
+    height: 2,5em;
+    margin: 5px auto;
+}
+
+#Add{
+    background-color: rgb(51, 204, 51);
+    border-color: rgb(0, 153, 0);
+    color: white;
+}
+
+#Delete{
+    background-color: rgb(255, 80, 80);
+    border-color: rgb(255, 0, 0);
+    color: white;
+}
+
+#Print_labels{
+    margin-left: 62%;
+    background-color: rgb(0, 102, 255);
+    border-color: rgb(0, 51, 204);
+    color: white;
+}
+
+#Print_list{
+    background-color: rgb(0, 204, 255);
+    border-color: rgb(0, 102, 204);
+    color: white;
 }

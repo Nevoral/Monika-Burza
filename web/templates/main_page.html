@@ -1,14 +1,21 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
+<form method = "POST">
+    <div id = "menu_bar" class = "container-fluid">
+        <button class="btn btn-primary" type="submit" id = "Add"><b>+</b> Přidat zboží</button>
+        <button class="btn btn-primary" type="submit" id = "Delete">Smazat prodané zboží</button>
+        <button class="btn btn-primary" type="submit" id = "Print_labels">Tisk štítků</button>
+        <button class="btn btn-primary" type="submit" id = "Print_list">Tisk seznamu</button>
+    </div>
     <table class="table table-hover table-dark">
       <thead>
           <tr>
               <!-- Your Columns HERE -->
               <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Barcode</th>
-              <th scope="col">Price</th>
+              <th scope="col">Název</th>
+              <th scope="col">Kód</th>
+              <th scope="col">Cena</th>
               <th scope="col">Options</th>
           </tr>
       </thead>
@@ -16,16 +23,24 @@
           <!-- Your rows inside the table HERE: -->
           {% for item in items %}
               <tr>
-                  <td>{{ item.id }}</td>
-                  <td>{{ item.name }}</td>
-                  <td>{{ item.barcode }}</td>
-                  <td>{{ item.price }}$</td>
-                  <td>
-                      <button class="btn btn-outline btn-info">More Info</button>
-                      <button class="btn btn-outline btn-success">Purchase this Item</button>
-                  </td>
+                <td>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="{{ item.id }}" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        {{ item.id }}
+                      </label>
+                    </div>
+                </td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.barcode }}</td>
+                <td>{{ item.price }}$</td>
+                <td>
+                    <button class="btn btn-outline btn-info">More Info</button>
+                    <button class="btn btn-outline btn-success">Purchase this Item</button>
+                </td>
               </tr>
-          {% endfor %}
+          {% endfor %} 
       </tbody>
   </table>
+</form>
 {% endblock %}
