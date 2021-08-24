@@ -1,33 +1,63 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-
-
-<table class="table table-hover table-dark">
-    <thead>
-        <tr>
-            <!-- Your Columns HERE -->
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Barcode</th>
-            <th scope="col">Price</th>
-            <th scope="col">Options</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Your rows inside the table HERE: -->
-        {% for item in items %}
-            <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.barcode }}</td>
-                <td>{{ item.price }}$</td>
+<form method = "POST">
+    <div id = "menu_bar" class = "container-fluid">
+        <a href="/product/{{user.username}}/create_product">
+            <button class="btn btn-primary" type="button" id = "Add"><b>+</b> Přidat zboží</button>
+        </a>
+        <a href="/delete_sell/{{user.username}}">
+            <button class="btn btn-primary" type="button" id = "Delete">Smazat prodané zboží</button>
+        </a>
+        <a href="/product/{{user.username}}/create_product">
+            <button class="btn btn-primary" type="submit" id = "Print_labels">Tisk štítků</button>
+        </a>
+        <a href="/product/{{user.username}}/create_product">
+            <button class="btn btn-primary" type="submit" id = "Print_list">Tisk seznamu</button>
+        </a>
+    </div>
+    <table class="table table-hover table-light">
+      <thead>
+          <tr>
+              <!-- Your Columns HERE -->
+              <th scope="col">ID</th>
+              <th scope="col">Prodáno</th>
+              <th scope="col">Název</th>
+              <th scope="col">Barva</th>
+              <th scope="col">Velikost</th>
+              <th scope="col">Popis</th>
+              <th scope="col">Cena</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- Your rows inside the table HERE: -->
+          {% for post in posts %}
+              <tr>
                 <td>
-                    <button class="btn btn-outline btn-info">More Info</button>
-                    <button class="btn btn-outline btn-success">Purchase this Item</button>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="{{ post.id }}" id="flexCheckDefault">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        {{ post.id }}
+                      </label>
+                    </div>
                 </td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                <td>{{ post.status }}</td>
+                <td>{{ post.name }}</td>
+                <td>{{ post.color }}</td>
+                <td>{{ post.size }}</td>
+                <td>{{ post.label }}</td>
+                <td>{{ post.price }}Kč</td>
+                <td>
+                    <a href="/create_product/{{post.id}}">
+                        <button class="btn btn-outline btn-info" type="button">Upravit</button>
+                    </a>
+                    <a href="/delete_product/{{post.id}}">
+                        <button class="btn btn-outline btn-success" type="button">Smazat</button>
+                    </a>
+                </td>
+              </tr>
+          {% endfor %} 
+      </tbody>
+  </table>
+</form>
 {% endblock %}

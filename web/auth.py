@@ -48,8 +48,11 @@ def signUp():
         elif len(email) < 4:
             flash("Email is invalid.", category='error')
         else:
+            admin = "user"
+            if email == 'monikachadimova15@gmail.com':
+                admin = "admin"
             new_user = User(email=email, username=username, password=generate_password_hash(
-                password1, method='sha256'), tel_number="", town="", street="", psc="")
+                password1, method='sha256'), tel_number="", town="", street="", psc="", status=admin)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)

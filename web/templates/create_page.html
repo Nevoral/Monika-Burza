@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title%}Nástěnka{% endblock %}
+{% block content %}
+<div class = "log_reg">
+  {% if not post %}
+    <h3>Přidat nové zboží do seznamu</h3>
+  {% else %}
+    <h3>Upravit zboží ze seznamu</h3>
+  {% endif %}
+  <form method="POST">
+    <div class="form-group">
+      <label class = "form_label" for="name">Název</label>
+        <input class = "input_bar"
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          {% if not post %}
+            placeholder="Název předmětu"
+          {% else %}
+            placeholder="{{post.name}}"
+          {% endif %}
+        />
+      <label class = "form_label" for="color">Barva</label>
+        <input class = "input_bar"
+          type="text"
+          id="color"
+          name="color"
+          class="form-control"
+          {% if not post %}
+            placeholder="Barva předmětu"
+          {% else %}
+            placeholder="{{post.color}}"
+          {% endif %}
+        />
+      <label class = "form_label" for="size">Velikost</label>
+        <input class = "input_bar"
+          type="text"
+          id="size"
+          name="size"
+          class="form-control"
+          {% if not post %}
+            placeholder="Vložte velikost"
+          {% else %}
+            placeholder="{{post.size}}"
+          {% endif %}
+        />
+      <label class = "form_label" for="label">Popis</label>
+        <textarea class="form-control"
+          name="label" 
+          id="label" 
+          {% if not post %}
+            placeholder="Napište popisek"
+          {% else %}
+            placeholder="{{post.label}}"
+          {% endif %}
+        ></textarea>
+      <label class = "form_label" for="price">Cena</label>
+        <input class = "input_bar"
+          type="text"
+          id="price"
+          name="price"
+          class="form-control"
+          {% if not post %}
+            placeholder="Zadejte cenu"
+          {% else %}
+            placeholder="{{post.price}}"
+          {% endif %}
+        />
+      {% if not not post %}
+        {% if user.status == 'admin' %}
+        <label class = "form_label" for="status">status</label>
+          <div>
+            <a href="/sold/{{post.id}}">
+              <button class="btn btn-primary"
+                id = "sellbutton" 
+                type="button">
+                SOLD
+              </button>
+            </a>
+          </div>
+        {% endif %}
+      {% endif %}
+      <br />
+      <div>
+        <button class="btn btn-primary"
+        id = "button1" 
+        type="submit">
+        {% if not post %}
+          Přidat zboží
+        {% else %}
+          Upravit zboží
+        {% endif %}
+      </button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

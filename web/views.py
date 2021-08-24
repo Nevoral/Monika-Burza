@@ -9,41 +9,80 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 def home():
     posts = Post.query.all()
+
+    #filtr na prodané ty se tu neukáží
+    # jenom prvních 15 co přidalo nejpozději
+
     return render_template("main_page.html", user=current_user, posts=posts)
 
-@views.route("/create-products", methods=['GET', 'POST'])
+@views.route("/create_product/<id>", methods=['GET', 'POST'])
 @login_required
-def create_post():
+def update_product(id):
     if request.method == "POST":
-        text = request.form.get('text')
+        name = request.form.get("name")
+        color = request.form.get("color")
+        size = request.form.get("size")
+        label = request.form.get("label")
+        price = request.form.get("price")
 
-        if not text:
-            flash('Post cannot be empty', category='error')
-        else:
-            post = Post(text=text, author=current_user.id)
-            db.session.add(post)
-            db.session.commit()
-            flash('Post created!', category='success')
-            return redirect(url_for('views.home'))
+        find_post= Post.query.filter_by(id=id).first()
+        if name != "":
+            find_post.name = name
+        if color != "":
+            find_post.color = color
+        if size != "":
+            find_post.size = size
+        if size != "":
+            find_post.size = size
+        if label != "":
+            find_post.label = label
+        if price != "":
+            find_post.price = price
+        db.session.commit()
+        flash('Post created!', category='success')
+        return redirect(url_for('views.home'))
 
-    return render_template('create_product.html', user=current_user)
+    post = Post.query.filter_by(id=id).first()
+    return render_template('create_page.html', user=current_user, post=post)
 
+@views.route("/product/<username>/create_product", methods=['GET', 'POST'])
+@login_required
+def create_product(username):
+    if request.method == "POST":
+        name = request.form.get("name")
+        color = request.form.get("color")
+        size = request.form.get("size")
+        label = request.form.get("label")
+        price = request.form.get("price")
 
-@views.route("/delete-products/<id>")
+        new_post = Post(label = label, name = name, color = color, size = size, price = price, status = False, author=current_user.id)
+        db.session.add(new_post)
+        db.session.commit()
+        flash('Post created!', category='success')
+        return redirect(url_for('views.home'))
+    user = User.query.filter_by(username=username).first()
+    
+    if not user:
+        flash('No user with that username exists.', category='error')
+        return redirect(url_for('views.home'))
+
+    return render_template('create_page.html',user=current_user, post = None, username=username)
+
+@views.route("/delete_product/<id>")
 @login_required
 def delete_post(id):
     post = Post.query.filter_by(id=id).first()
 
     if not post:
         flash("Post does not exist.", category='error')
-    elif current_user.id != post.id:
+    elif current_user.id != post.author:
         flash('You do not have permission to delete this post.', category='error')
     else:
         db.session.delete(post)
         db.session.commit()
         flash('Post deleted.', category='success')
 
-    return redirect(url_for('views.posts'))
+    return redirect(url_for('views.home'))
 
 
 @views.route("/product/<username>")
@@ -84,3 +123,24 @@ def profile(username):
         db.session.commit()
         return redirect(url_for('views.home'))
     return render_template("profile_page.html", user=current_user, username=username)
+
+@views.route("/delete_sell/<username>")
+@login_required
+def delete_sell(username):
+    user = User.query.filter_by(username=username).first()
+    posts = user.posts
+    for post in posts:
+        if post.status:
+            db.session.delete(post)
+            db.session.commit()
+    flash('Posts deleted.', category='success')
+
+    return redirect(url_for('views.home'))
+
+@views.route("/sold/<id>")
+@login_required
+def sold(id):
+    post = Post.query.filter_by(id=id).first()
+    post.status = True
+    db.session.commit()
+    return redirect(url_for('views.home'))
