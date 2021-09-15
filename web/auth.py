@@ -15,13 +15,13 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash("Logged in!", category='success')
+                flash("Přihlášení proběhlo úspěšně!", category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
-                flash('Password is incorrect.', category='error')
+                flash('Zadané heslo není správné.', category='error')
         else:
-            flash('Email does not exist.', category='error')
+            flash('Profil pod tímto emailem neexistuje!', category='error')
     return render_template("login_page.html", user=current_user)
 
 @auth.route("/signup", methods=['GET', 'POST'])
@@ -36,17 +36,17 @@ def signUp():
         username_exists = User.query.filter_by(username=username).first()
 
         if email_exists:
-            flash('Email is already in use.', category='error')
+            flash('Tento email již někdo používá.', category='error')
         elif username_exists:
-            flash('Username is already in use.', category='error')
+            flash('Tahle přezdívka již je zabrána.', category='error')
         elif password1 != password2:
-            flash('Password don\'t match!', category='error')
+            flash('Hesla se musí shodovat!', category='error')
         elif len(username) < 2:
-            flash('Username is too short.', category='error')
+            flash('Přezdívka je příliš krátká.', category='error')
         elif len(password1) < 6:
-            flash('Password is too short.', category='error')
+            flash('Heslo je příliš krátké.', category='error')
         elif len(email) < 4:
-            flash("Email is invalid.", category='error')
+            flash("Tohle není validní emailová adressa.", category='error')
         else:
             admin = "user"
             if email == 'monikachadimova15@gmail.com':
@@ -56,7 +56,7 @@ def signUp():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            flash('User created!')
+            flash('Účet vytvořen!')
             return redirect(url_for('views.home'))
     return render_template("register_page.html", user=current_user)
 

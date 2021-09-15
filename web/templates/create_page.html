@@ -7,45 +7,50 @@
   {% else %}
     <h3>Upravit zboží ze seznamu</h3>
   {% endif %}
+  <br />
   <form method="POST">
     <div class="form-group">
-      <label class = "form_label" for="name">Název</label>
-        <input class = "input_bar"
-          type="text"
+      <div class="input-group">
+        <span class="input-group-addon"><label>Název</label></span>
+        <input class="form-control" 
+          type="text" 
           id="name"
           name="name"
-          class="form-control"
           {% if not post %}
             placeholder="Název předmětu"
           {% else %}
             placeholder="{{post.name}}"
-          {% endif %}
-        />
-      <label class = "form_label" for="color">Barva</label>
-        <input class = "input_bar"
-          type="text"
+          {% endif %}>
+      </div>
+      <br />
+      <div class="input-group">
+        <span class="input-group-addon"><label>Barva</label></span>
+        <input class="form-control" 
+          type="text" 
           id="color"
           name="color"
-          class="form-control"
           {% if not post %}
             placeholder="Barva předmětu"
           {% else %}
             placeholder="{{post.color}}"
-          {% endif %}
-        />
-      <label class = "form_label" for="size">Velikost</label>
-        <input class = "input_bar"
-          type="text"
+          {% endif %}>
+      </div>
+      <br />
+      <div class="input-group">
+        <span class="input-group-addon"><label>Velikost</label></span>
+        <input class="form-control" 
+          type="text" 
           id="size"
           name="size"
-          class="form-control"
           {% if not post %}
             placeholder="Vložte velikost"
           {% else %}
             placeholder="{{post.size}}"
-          {% endif %}
-        />
-      <label class = "form_label" for="label">Popis</label>
+          {% endif %}>
+      </div>
+      <br />
+      <div class="input-group">
+        <span class="input-group-addon"><label>Popis</label></span>
         <textarea class="form-control"
           name="label" 
           id="label" 
@@ -55,35 +60,36 @@
             placeholder="{{post.label}}"
           {% endif %}
         ></textarea>
-      <label class = "form_label" for="price">Cena</label>
-        <input class = "input_bar"
-          type="text"
+      </div>
+      <br />
+      <div class="input-group">
+        <span class="input-group-addon"><label>Cena</label></span>
+        <input class="form-control" 
+          type="text" 
           id="price"
           name="price"
-          class="form-control"
           {% if not post %}
             placeholder="Zadejte cenu"
           {% else %}
             placeholder="{{post.price}}"
-          {% endif %}
-        />
+          {% endif %}>
+      </div>
       {% if not not post %}
         {% if user.status == 'admin' %}
-        <label class = "form_label" for="status">status</label>
+          <br />
           <div>
             <a href="/sold/{{post.id}}">
-              <button class="btn btn-primary"
+              <button class="btn btn-default"
                 id = "sellbutton" 
                 type="button">
-                SOLD
+                Prodáno
               </button>
             </a>
           </div>
         {% endif %}
       {% endif %}
-      <br />
       <div>
-        <button class="btn btn-primary"
+        <button class="btn btn-default"
         id = "button1" 
         type="submit">
         {% if not post %}

@@ -4,28 +4,30 @@
 
 <div class = "log_reg">
   <h3>Přihlášení</h3>
+  <br/>
   <form method="POST">
     <div class="form-group">
-      <label class = "form_label" for="email">Emailová adresa:</label>
-      <input class = "input_bar"
-        type="text"
-        id="email"
-        name="email"
-        class="form-control"
-        placeholder="Vložte email"
-      />
-      <label class = "form_label" for="password">Heslo:</label>
-      <input class = "input_bar"
-        type="password"
-        id="password"
-        name="password"
-        class="form-control"
-        placeholder="Zadejte heslo"
-      />
+      <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input class="form-control" 
+          type="text" 
+          id="email"
+          name="email"
+          placeholder="Vložte email">
+      </div>
+      <br/>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <input class="form-control" 
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Zadejte heslo">
+      </div>
       <br/>
       <a id = "forget_pass" class="text-muted"><small>Zapomenuté heslo</small></a>
       <div>
-        <button id = "button1" class="btn btn-primary" type="submit">Přihlásit</button>
+        <button id = "button1" class="btn btn-default" type="submit">Přihlásit</button>
       </div>
     </div>
   </form>

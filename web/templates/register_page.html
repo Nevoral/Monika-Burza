@@ -4,41 +4,45 @@
 
 <div class = "log_reg">
   <h3>Registrace</h3>
+  <br/>
   <form method="POST">
     <div class="form-group">
-      <label class = "form_label" for="email">Emailová adresa</label>
-      <input class = "input_bar"
-        type="text"
-        id="email"
-        name="email"
-        class="form-control"
-        placeholder="Vložte email"
-      />
-      <label class = "form_label" for="username">Uživatelské jméno</label>
-      <input class = "input_bar"
-        type="text"
-        id="username"
-        name="username"
-        class="form-control"
-        placeholder="Vložte uživatelské jméno"
-      />
-      <label class = "form_label" for="password1">Heslo</label>
-      <input class = "input_bar"
-        type="password"
-        id="password1"
-        name="password1"
-        class="form-control"
-        placeholder="Vložte heslo"
-      />
-      <label class = "form_label" for="password2">Zopakujte heslo</label>
-      <input class = "input_bar"
-        type="password"
-        id="password2"
-        name="password2"
-        class="form-control"
-        placeholder="Vložte heslo znovu"
-      />
-      <br />
+      <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        <input class="form-control" 
+          type="text" 
+          id="email"
+          name="email"
+          placeholder="Vložte email">
+      </div>
+      <br/>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <input class="form-control" 
+          type="text" 
+          id="username"
+          name="username"
+          placeholder="Zvol si uživatelské jméno">
+      </div>
+      <br/>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <input class="form-control" 
+          type="password"
+          id="password1"
+          name="password1"
+          placeholder="Zadejte heslo">
+      </div>
+      <br/>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <input class="form-control" 
+          type="password"
+          id="password2"
+          name="password2"
+          placeholder="Zopakuj heslo">
+      </div>
+      <br/>
       <div>
         <button id = "button1" class="btn btn-primary" type="submit">Registrovat</button>
       </div>

@@ -1,90 +1,134 @@
 <!doctype html>
-<html lang="en">
+<html lang="cz">
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-16">
+    <meta name="viewport" 
+      content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    
-    <link rel = "stylesheet" href = "{{ url_for('static', filename='CSS/style.css') }}">
-
+    <link rel = "stylesheet" 
+      href = "{{ url_for('static', filename='CSS/style.css') }}">
+    <link rel="stylesheet" 
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <a class="navbar-brand" href="/">Burza Kněžice</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/home">Nástěnka</a>
-          </li>
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="/product/{{user.username}}">Tvé produkty</a>
-          </li>
-          {% endif %}
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="nav navbar-brand" href="/"> Burza Kněžice
+          </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" 
+                href="/home">
+                <button class = "btn btn-outline-light" type='button'>
+                  <span class="glyphicon glyphicon-list-alt"></span> Nástěnka
+                </button>
+              </a>
+            </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" 
+                  href="/product/{{user.username}}">
+                  <button class = "btn btn-outline-light" type='button'>
+                    <span class="glyphicon glyphicon-tags"></span> Tvé produkty
+                  </button>
+                </a>
+              </li>
+              {% if user.status == 'admin' %}
+                <li class="nav-item">
+                  <a class="nav-link" 
+                    href="/admin">
+                    <button class = "btn btn-outline-light" type='button'>
+                      <span class="glyphicon glyphicon-king"></span> Admin přístup
+                    </button>
+                  </a>
+                </li>
+              {% endif %}
+            {% endif %}
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-item nav-link" 
+                  href="/profile/{{user.username}}">
+                  <button class = "btn btn-outline-light" type='button'>
+                    <span class="glyphicon glyphicon-user"></span> {{user.username}}
+                  </button>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-item nav-link" 
+                  href="/logout">
+                  <button class = "btn btn-outline-light" type='button'>
+                    <span class="glyphicon glyphicon-off"></span> Odhlásit
+                  </button>
+                </a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" 
+                    href="/login">
+                    <button class = "btn btn-outline-light" type='button'>
+                      <span class="glyphicon glyphicon-log-in"></span> Přihlásit
+                    </button>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" 
+                    href="/signup">
+                    <button class = "btn btn-outline-light" type='button'>
+                      <span class="glyphicon glyphicon-user"></span> Registrovat
+                    </button>
+                  </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
-      <p align="right">
-        <ul class="navbar-nav">
-          {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-item nav-link" href="/profile/{{user.username}}">{{user.username}}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-item nav-link" href="/logout">Odhlásit se</a>
-            </li>
-          {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Přihlásit</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/signup">Registrovat</a>
-            </li>
-          {% endif %}
-        </ul>
-      </p>
     </nav>
-{% with messages = get_flashed_messages(with_categories=True) %}
-  {% if messages %}
-    {% for category, message in messages %}
-    {% if category == "error" %}
-    <div class="alert alert-danger alter-dismissible fade show" role="alert">
-      {{ message }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% if category == "error" %}
+            <div class="alert alert-danger alter-dismissible fade show" 
+              role="alert">
+              {{ message }}
+              <button class="btn-close" 
+                type="button" 
+                data-bs-dismiss="alert">
+              </button>
+            </div>
+          {% else %}
+            <div class="alert alert-success alter-dismissible fade show" 
+              role="alert">
+              {{ message }}
+              <button class="btn-close" 
+                type="button" 
+                data-bs-dismiss="alert">
+              </button>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <div> 
+      {% block content %}{% endblock %}
     </div>
-    {% else %}
-    <div class="alert alert-success alter-dismissible fade show" role="alert">
-      {{ message }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-    {% endif %}
-
-    {% endfor %}
-  {% endif %}
-{% endwith %}
-<div>{% block content %}{% endblock %}</div>
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-    -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" 
+      crossorigin="anonymous">
+    </script>
   </body>
   <style>
     body {
-      background-color: #24d4d4;
-      color: black
+      background-color: #261400;
+      color: white
     }
   </style>
 </html>

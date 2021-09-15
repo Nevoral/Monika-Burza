@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    bring = db.Column(db.Boolean, nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     label = db.Column(db.Text, nullable=False)
     name = db.Column(db.String(150))

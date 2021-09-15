@@ -1,63 +1,133 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-<form method = "POST">
-    <div id = "menu_bar" class = "container-fluid">
+<form method = "POST" 
+    action='/table_pdf/{{user.username}}'>
+    <div class = "container-fluid" 
+        id = "menu_bar">
         <a href="/product/{{user.username}}/create_product">
-            <button class="btn btn-primary" type="button" id = "Add"><b>+</b> Přidat zboží</button>
+            <button class="btn btn-default" 
+                type="button" 
+                id = "Add">
+                <span class="glyphicon glyphicon-plus"></span> Přidat zboží
+            </button>
         </a>
-        <a href="/delete_sell/{{user.username}}">
-            <button class="btn btn-primary" type="button" id = "Delete">Smazat prodané zboží</button>
-        </a>
-        <a href="/product/{{user.username}}/create_product">
-            <button class="btn btn-primary" type="submit" id = "Print_labels">Tisk štítků</button>
-        </a>
-        <a href="/product/{{user.username}}/create_product">
-            <button class="btn btn-primary" type="submit" id = "Print_list">Tisk seznamu</button>
-        </a>
+        <button class="btn btn-default" 
+            value='stitek' 
+            name='action' 
+            type="submit" 
+            id = "Print_labels">
+            <span class="glyphicon glyphicon-print"></span> Tisk štítků
+        </button>
+        <button class="btn btn-default" 
+            value='tabulka' 
+            name='action' 
+            type="submit" 
+            id = "Print_list">
+            <span class="glyphicon glyphicon-print"></span> Tisk seznamu
+        </button>
     </div>
-    <table class="table table-hover table-light">
-      <thead>
-          <tr>
-              <!-- Your Columns HERE -->
-              <th scope="col">ID</th>
-              <th scope="col">Prodáno</th>
-              <th scope="col">Název</th>
-              <th scope="col">Barva</th>
-              <th scope="col">Velikost</th>
-              <th scope="col">Popis</th>
-              <th scope="col">Cena</th>
-          </tr>
-      </thead>
-      <tbody>
-          <!-- Your rows inside the table HERE: -->
-          {% for post in posts %}
-              <tr>
-                <td>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="{{ post.id }}" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        {{ post.id }}
-                      </label>
-                    </div>
-                </td>
-                <td>{{ post.status }}</td>
-                <td>{{ post.name }}</td>
-                <td>{{ post.color }}</td>
-                <td>{{ post.size }}</td>
-                <td>{{ post.label }}</td>
-                <td>{{ post.price }}Kč</td>
-                <td>
-                    <a href="/create_product/{{post.id}}">
-                        <button class="btn btn-outline btn-info" type="button">Upravit</button>
-                    </a>
-                    <a href="/delete_product/{{post.id}}">
-                        <button class="btn btn-outline btn-success" type="button">Smazat</button>
-                    </a>
-                </td>
-              </tr>
-          {% endfor %} 
-      </tbody>
-  </table>
+    <table class="table table-hover table-light" 
+        id="myTable">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <input name="select_all" type="checkbox">
+                </th>
+                <th scope="col">Prodáno</th>
+                <th scope="col">Název</th>
+                <th scope="col">Barva</th>
+                <th scope="col">Velikost</th>
+                <th scope="col">Popis</th>
+                <th scope="col">Cena</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+                {% if post.status %}
+                    <tr class="success">
+                {% else %}
+                    <tr>    
+                {% endif %}
+                    <td>
+                        <input class="form-check-input" 
+                            type="checkbox" 
+                            value="{{ post.id }}" 
+                            id="flexCheckDefault" 
+                            name='checkID'>
+                    </td>
+                    <td>
+                        {% if post.status %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove"></span>
+                        {% endif %}
+                    </td>
+                    <td>{{ post.name }}</td>
+                    <td>{{ post.color }}</td>
+                    <td>{{ post.size }}</td>
+                    <td>{{ post.label }}</td>
+                    <td>{{ post.price }}Kč</td>
+                    <td>
+                        <a href="/create_product/{{post.id}}">
+                            <button class="btn btn-outline btn-info" 
+                                type="button">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </a>
+                        <a href="/delete_product/{{post.id}}">
+                            <button class="btn btn-outline btn-danger" 
+                                type="button">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+    <script>
+        function myFunction() {
+            // Declare variables
+            var table; tr; td; i;
+            if (document.getElementById('hideSell').value) { 
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[1];
+                    if (!td) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            } else {
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[1];
+                    if (td) {
+                        tr[i].style.display = "";;
+                    }
+                }
+            }
+        }
+        var dataTable = document.getElementById('myTable');
+        var checkItAll = dataTable.querySelector('input[name="select_all"]');
+        var inputs = dataTable.querySelectorAll('tbody>tr>td>input');
+    
+        checkItAll.addEventListener('change', function() {
+          if (checkItAll.checked) {
+            inputs.forEach(function(input) {
+                input.checked = true;
+            });  
+          } else {
+            inputs.forEach(function(input) {
+                input.checked = false;
+            });  
+          }
+        });
+    </script>
 </form>
 {% endblock %}

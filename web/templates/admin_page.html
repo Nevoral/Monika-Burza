@@ -1,5 +1,292 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-<h1>admin</h1>
+
+<div class="tab">
+    <button class="tablinks" 
+      {% if tab == "1" %}
+        id="defaultOpen" 
+        {% endif %}
+      onclick="openCity(event, 'sell')">Prodej produktů
+    </button>
+    <button class="tablinks" 
+      {% if tab == "2" %}
+        id="defaultOpen" 
+      {% endif %}
+      onclick="openCity(event, 'reg')">Registrace prodejců
+    </button>
+    <button class="tablinks"
+      {% if tab == "3" %}
+        id="defaultOpen"  
+      {% endif %}
+      onclick="openCity(event, 'inf')">Informace o burze
+    </button>
+  </div>
+
+  <div class="tabcontent" 
+    id="sell">
+    <form method = "POST" 
+      action='/admin'>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+        <input class="form-control" 
+          type="text" 
+          placeholder='Zadej ID položky'
+          id="myInput" 
+          onkeyup="myFunction()">
+      </div>
+      <br />
+      <table class="table table-hover table-light" 
+        id="myTable">
+        <thead>
+          <tr>
+            <th scope="col">
+              <input name="select_all" 
+              type="checkbox"> ID
+            </th>
+            <th scope="col">Prodáno</th>        
+            <th scope="col">Název</th>
+            <th scope="col">Barva</th>
+            <th scope="col">Velikost</th>
+            <th scope="col">Popis</th>
+            <th scope="col">Cena</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+            {% if post.status %}
+              <tr class="success">
+            {% else %}
+              <tr>    
+            {% endif %}
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" 
+                    type="checkbox" 
+                    value="{{ post.id }}" 
+                    id="flexCheckDefault">
+                  <label class="form-check-label" 
+                    for="flexCheckDefault">
+                    {{ post.id }}
+                  </label>
+                </div>
+              </td>
+              <td>
+                {% if post.status %}
+                  <span class="glyphicon glyphicon-ok"></span>
+                {% else %}
+                  <span class="glyphicon glyphicon-remove"></span>
+                {% endif %}
+              </td>
+              <td>{{ post.name }}</td>
+              <td>{{ post.color }}</td>
+              <td>{{ post.size }}</td>
+              <td>{{ post.label }}</td>
+              <td>{{ post.price }}Kč</td>
+              <td>
+                <a href="/create_product/{{post.id}}">
+                  <button class="btn btn-outline btn-info" 
+                    type="button">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  </button>
+                </a>
+              </td>
+            </tr>
+          {% endfor %} 
+        </tbody>
+      </table>
+      <button class="btn btn-outline btn-default" 
+        value='buyer' 
+        name='action' 
+        type="submit">
+        <span class="glyphicon glyphicon-print"></span> Vytisknout fakturu kupujicimu
+      </button>
+    </form>
+  </div>
+
+  <div class="tabcontent" 
+    id="reg">
+    <form method = "POST" 
+      action='/admin'>
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="glyphicon glyphicon-search">
+          </i>
+        </span>
+        <input class="form-control" 
+          type="text"
+          name='userID' 
+          placeholder='Zadej ID prodávajícího'
+          id="myInputName" 
+          onkeyup="myFunctionName()">
+      </div> 
+      <br />
+      <table class="table table-hover table-light" 
+        id="myTableName">
+        <thead>
+          <tr>
+            <th scope="col">
+              <input name="select_all" 
+                type="checkbox"> ID
+            </th>
+            <th scope="col">Přineseno</th>
+            <th scope="col">Prodejce</th>
+            <th scope="col">Prodáno</th>
+            <th scope="col">Název</th>
+            <th scope="col">Barva</th>
+            <th scope="col">Velikost</th>
+            <th scope="col">Popis</th>
+            <th scope="col">Cena</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+            {% if post.bring %}
+              <tr class="success">
+            {% else %}
+              <tr>    
+            {% endif %}
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" 
+                    type="checkbox" 
+                    value="{{ post.id }}" 
+                    id="flexCheckDefault">
+                    <label class="form-check-label" 
+                    for="flexCheckDefault">
+                    {{ post.id }}
+                  </label>
+                </div>
+              </td>
+              <td>
+                {% if post.bring %}
+                <span class="glyphicon glyphicon-ok"></span>
+                {% else %}
+                <span class="glyphicon glyphicon-remove"></span>
+                {% endif %}
+              </td>
+              <td>{{ post.author }}</td>
+              <td>
+                {% if post.status %}
+                  <span class="glyphicon glyphicon-ok"></span>
+                {% else %}
+                  <span class="glyphicon glyphicon-remove"></span>
+                {% endif %}
+              </td>
+              <td>{{ post.name }}</td>
+              <td>{{ post.color }}</td>
+              <td>{{ post.size }}</td>
+              <td>{{ post.label }}</td>
+              <td>{{ post.price }}Kč</td>
+              <td>
+                <a href="/create_product/{{post.id}}">
+                    <button class="btn btn-outline btn-info" 
+                      type="button">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </a>
+              </td>
+            </tr>
+          {% endfor %} 
+        </tbody>
+      </table>
+      <button class="btn btn-outline btn-default" 
+        value='bring' 
+        name='action' 
+        type="submit">
+        <span class="glyphicon glyphicon-apple"></span> Přinesené věci
+      </button>
+      <button class="btn btn-outline btn-default" 
+        value='seller' 
+        name='action' 
+        type="submit">
+        <span class="glyphicon glyphicon-print"></span> Vytisknout fakturu prodejci
+      </button>
+    </form>
+  </div>
+
+  <div class="tabcontent"
+    id="inf">
+  </div> 
+<script>
+  document.getElementById("defaultOpen").click();
+  function openCity(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the link that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+} 
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+  function myFunctionName() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInputName");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTableName");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+  var dataTable = document.getElementById('myTable');
+  var checkItAll = dataTable.querySelector('input[name="select_all"]');
+  var inputs = dataTable.querySelectorAll('tbody>tr>td>div>input');
+  checkItAll.addEventListener('change', function() {
+    if (checkItAll.checked) {
+      inputs.forEach(function(input) {
+          input.checked = true;
+      });  
+    } else {
+      inputs.forEach(function(input) {
+          input.checked = false;
+      });  
+    }
+  });
+</script>
 {% endblock %}
