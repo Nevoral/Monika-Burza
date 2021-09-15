@@ -144,10 +144,9 @@ def delete_sell(username):
 @login_required
 def sold(id):
     post = Post.query.filter_by(id=id).first()
-    username = User.query.filter_by(id=post.author).first()
     post.status = not post.status
     db.session.commit()
-    return redirect(url_for('views.admin', username=username, posts=username.posts, tab = '1'))
+    return render_template("admin_page.html", user=current_user, posts=Post.query.all(), username=current_user.username, tab='1')
 
 @views.route("/admin", methods=['GET', 'POST'])
 @login_required
@@ -158,6 +157,20 @@ def admin():
             return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
         elif request.form.get('action') == 'seller':
             return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='2')
+        elif request.form.get('action') == 'bring':
+            id_list = request.form.getlist("checkID")
+            for i in id_list:
+                post = Post.query.filter_by(id=i).first()
+                username = User.query.filter_by(id=post.author).first()
+                if not post:
+                    flash("Položka neexistuje.", category='error')
+                elif current_user.id != post.author:
+                    flash('Nemáš oprávnění označit tuto položku.', category='error')
+                else:
+                    post.bring = True
+                    db.session.commit()
+                    flash('Položka byla označena.', category='success')
+            return render_template("admin_page.html", user=current_user, posts=find_posts, username=username, tab='2')
         else:
             return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='3')
     return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
@@ -234,22 +247,6 @@ def print_user_table(username):
             flash('Něco proběhlo špatně, zkuste to znovu.', category='error')
             return redirect(url_for('views.posts', username=username))
 
-@views.route("/bring/<id>")
-@login_required
-def bring(id):
-    post = Post.query.filter_by(id=id).first()
-    username = User.query.filter_by(id=post.author).first()
-    if not post:
-        flash("Položka neexistuje.", category='error')
-    elif current_user.id != post.author:
-        flash('Nemáš oprávnění označit tuto položku.', category='error')
-    else:
-        post.bring = not post.bring
-        db.session.commit()
-        flash('Položka byla odstraněna.', category='success')
-
-    return redirect(url_for('views.admin', username=username.username, posts=post, tab='2'))
-
 @views.route("/fakturaSeller_pdf", methods=['GET', 'POST'])
 @login_required
 def print_user_faktura():
@@ -324,3 +321,19 @@ def print_user_faktura():
         else:
             flash('Není vyplněno id uživatele.', category='error')
             return redirect(url_for('views.admin', posts=posts))
+
+@views.route("/bring/<id>")
+@login_required
+def bring(id):
+    post = Post.query.filter_by(id=id).first()
+    username = User.query.filter_by(id=post.author).first()
+    if not post:
+        flash("Položka neexistuje.", category='error')
+    elif current_user.id != post.author:
+        flash('Nemáš oprávnění označit tuto položku.', category='error')
+    else:
+        post.bring = not post.bring
+        db.session.commit()
+        flash('Položka byla označena.', category='success')
+
+    return render_template("admin_page.html", user=current_user, posts=Post.query.all(), username=current_user.username, tab='2')
