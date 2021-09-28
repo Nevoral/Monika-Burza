@@ -211,6 +211,78 @@
 
   <div class="tabcontent"
     id="inf">
+    <form method = "POST" 
+      action='/admin'>
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="glyphicon glyphicon-search">
+          </i>
+        </span>
+        <input class="form-control" 
+          type="text"
+          name='userEmail' 
+          placeholder='Zadej email prodávajícího'
+          id="myInputEmail" 
+          onkeyup="myFunctionEmail()">
+      </div> 
+      <br />
+      <table class="table table-hover table-light" 
+        id="myTableEmail">
+        <thead>
+          <tr>
+            <th scope="col">Prodejce</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for userp in users %}
+            <tr>    
+              <td>{{ userp.email }}</td>
+              <td>{{ userp.status }}</td>
+              {% if userp.email != "monikachadimova15@gmail.com" %}
+                {% if userp.status == "user" %}
+                  <td>
+                    <a href="/make_seller/{{userp.id}}">
+                      <button class="btn btn-outline btn-default" 
+                        type="button">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Prodávající
+                      </button>
+                    </a>
+                  </td>
+                {% elif userp.status == "seller" %}
+                  <td>
+                    <a href="/make_admin/{{userp.id}}">
+                      <button class="btn btn-outline btn-default" 
+                        type="button">
+                        <span class="glyphicon glyphicon-king"></span> Admin
+                      </button>
+                    </a>
+                    <a href="/make_user/{{userp.id}}">
+                      <button class="btn btn-outline btn-default" 
+                        type="button">
+                        <span class="glyphicon glyphicon-user"></span> User
+                      </button>
+                    </a>
+                  </td>
+                {% elif userp.status == "admin" %}
+                  <td>
+                    <a href="/make_seller/{{userp.id}}">
+                      <button class="btn btn-outline btn-default" 
+                        type="button">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Prodávající
+                      </button>
+                    </a>
+                  </td>
+                {% endif %}
+              {% else %}
+                <td></td>
+              {% endif %}
+            </tr>
+          {% endfor%}
+        </tbody>
+      </table>
+    </form>
   </div> 
 <script>
   document.getElementById("defaultOpen").click();
@@ -266,6 +338,27 @@
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+  function myFunctionEmail() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInputEmail");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTableEmail");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {

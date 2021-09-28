@@ -15,7 +15,7 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="nav navbar-brand" href="/"> Burza Kněžice
@@ -40,7 +40,7 @@
                   </button>
                 </a>
               </li>
-              {% if user.status == 'admin' %}
+              {% if user.status != 'user' %}
                 <li class="nav-item">
                   <a class="nav-link" 
                     href="/admin">
@@ -108,6 +108,7 @@
             <div class="alert alert-success alter-dismissible fade show" 
               role="alert">
               {{ message }}
+              
               <button class="btn-close" 
                 type="button" 
                 data-bs-dismiss="alert">
@@ -127,7 +128,7 @@
   </body>
   <style>
     body {
-      background-color: #261400;
+      background-color: #F79C35;
       color: white
     }
   </style>

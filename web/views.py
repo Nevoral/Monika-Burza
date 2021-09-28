@@ -27,9 +27,14 @@ def update_product(id):
         size = request.form.get("size")
         label = request.form.get("label")
         price = request.form.get("price")
-
         find_post= Post.query.filter_by(id=id).first()
         username = User.query.filter_by(id=find_post.author).first()
+        try:
+            if price != "":
+                cislo = float(price)
+        except:
+            flash('Cena musí být číslo', category = 'error')
+            return redirect(url_for('views.update_product', id=id))
         if name != "":
             find_post.name = name
         if color != "":
@@ -58,7 +63,14 @@ def create_product(username):
         size = request.form.get("size")
         label = request.form.get("label")
         price = request.form.get("price")
-
+        if name == "" or color == "" or size == "" or price == "":
+            flash('Musíte vyplnit všechna pole s "*"', category = 'error')
+            return redirect(url_for('views.create_product', username=username))
+        try:
+            cislo = float(price)
+        except:
+            flash('Cena musí být číslo', category = 'error')
+            return redirect(url_for('views.create_product', username=username))
         new_post = Post(bring = False, label = label, name = name, color = color, size = size, price = price, status = False, author=current_user.id)
         db.session.add(new_post)
         db.session.commit()
@@ -128,17 +140,25 @@ def profile(username):
         return redirect(url_for('views.home'))
     return render_template("profile_page.html", user=current_user, username=username)
 
-@views.route("/delete_sell/<username>")
+@views.route("/delete_sell")
 @login_required
-def delete_sell(username):
-    user = User.query.filter_by(username=username).first()
-    posts = user.posts
+def delete_sell():
+    posts = Post.query.all()
     for post in posts:
         if post.status:
             posts.remove(post)
     flash('Prodané položky byly schovány.', category='success')
+    return redirect(url_for('views.admin', tab = '3'))
 
-    return redirect(url_for('views.admin', username=username, posts=posts, tab = '3'))
+@views.route("/unmarked_bring")
+@login_required
+def unmarked_bring():
+    posts = Post.query.all()
+    for post in posts:
+        if post.status:
+            post.status = False
+    flash('Neprodané položky byly zpět označené za nepřítomné.', category='success')
+    return redirect(url_for('views.admin', tab = '3'))
 
 @views.route("/sold/<id>")
 @login_required
@@ -154,8 +174,44 @@ def admin():
     find_posts = Post.query.all()
     if request.method == 'POST':
         if request.form.get('action') == 'buyer':
+            id_list = request.form.getlist('checkID')
+            if id_list == []:
+                return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
+            tot_price = 0
+            #hlavička faktury
+            for i in id_list:
+                post = Post.query.filter_by(id = i).first()
+                tot_price += float(post.price)
+                if not post:
+                    flash("Položka neexistuje", category = 'error')
+                else:
+                    #prodan0 produktz
+                    post.status = True
+                    db.session.commit()
+            #přidíní celkové částky k zaplacení
+            flash('Položky byly označeny za prodané', category='success')
             return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
         elif request.form.get('action') == 'seller':
+            id_user = request.form.get('userID')
+            if id_user == "":
+                return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='2')
+            user = User.query.filter_by(id = id_user).first()
+            posts = user.posts
+            tot_price = 0
+            #hlavička faktury
+            for i in posts:
+                post = Post.query.filter_by(id = i).first()
+                if post.status:
+                    tot_price += float(post.price)
+                if not post:
+                    flash("Položka neexistuje", category = 'error')
+                else:
+                    #prodan0 produktz
+                    post.bring = False
+                    db.session.commit()
+            #přidíní celkové částky k zaplacení
+            tot_price = tot_price * 0.9
+            flash('Položky byly označeny za prodané', category='success')
             return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='2')
         elif request.form.get('action') == 'bring':
             id_list = request.form.getlist("checkID")
@@ -164,16 +220,14 @@ def admin():
                 username = User.query.filter_by(id=post.author).first()
                 if not post:
                     flash("Položka neexistuje.", category='error')
-                elif current_user.id != post.author:
-                    flash('Nemáš oprávnění označit tuto položku.', category='error')
                 else:
                     post.bring = True
                     db.session.commit()
-                    flash('Položka byla označena.', category='success')
+            flash('Položky byly označeny.', category='success')
             return render_template("admin_page.html", user=current_user, posts=find_posts, username=username, tab='2')
         else:
             return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='3')
-    return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
+    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=find_posts, username=current_user.username, tab='1')
 
 @views.route("/table_pdf/<username>", methods=['GET', 'POST'])
 @login_required
@@ -337,3 +391,30 @@ def bring(id):
         flash('Položka byla označena.', category='success')
 
     return render_template("admin_page.html", user=current_user, posts=Post.query.all(), username=current_user.username, tab='2')
+
+@views.route("/make_admin/<id>")
+@login_required
+def make_admin(id):
+    user = User.query.filter_by(id=id).first()
+    user.status = "admin"
+    db.session.commit()
+    flash('Prodejce byl změněn', category='success')
+    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='3')
+
+@views.route("/make_seller/<id>")
+@login_required
+def make_seller(id):
+    user = User.query.filter_by(id=id).first()
+    user.status = "seller"
+    db.session.commit()
+    flash('Prodejce byl změněn', category='success')
+    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='3')
+
+@views.route("/make_user/<id>")
+@login_required
+def make_user(id):
+    user = User.query.filter_by(id=id).first()
+    user.status = "user"
+    db.session.commit()
+    flash('Prodejce byl změněn', category='success')
+    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='3')

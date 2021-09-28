@@ -27,3 +27,8 @@ class Post(db.Model):
     status = db.Column(db.Boolean, nullable=False)
     author = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete="CASCADE"), nullable=False)
+
+class Burza(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime(timezone = True), default=func.now())
+    place = db.Column(db.String(150))
