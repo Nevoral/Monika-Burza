@@ -6,6 +6,38 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint("auth", __name__)
 
+@auth.route("/forgotten", methods=['GET', 'POST'])
+def forgotten():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        user = User.query.filter_by(email=email).first()
+        if user:
+            flash('Email s odkazen byl zaslán na váš email.', category='success')
+            sendEmail(user)
+        else:
+            flash('Profil pod tímto emailem neexistuje!', category='error')
+            return redirect(url_for('auth.forgotten'))
+    return render_template("forgotten_page.html", user=current_user)
+
+@auth.route("/reset/<token>", methods=['GET', 'POST'])
+def reset(token):
+    user = User.query.filter_by(token=token).first()
+    if request.method == 'POST':
+        password = request.form.get('password')
+        if not user:
+            flash('Zkuste znovou rozkliknout odkaz z emailu!', category='error')
+        else:
+            user.password = generate_password_hash(password, method='sha256')
+            db.session.commit()
+            flash('Heslo bylo změněno', category='success')
+            login_user(user, remember=True)
+        return redirect(url_for('views.home'))
+    return render_template("reset_page.html", user=user)
+
+def sendEmail(user):
+    pass
+    #return redirect(url_for('auth.reset', token=user.token))
+
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -29,7 +61,7 @@ def signUp():
     if request.method == 'POST':
         email = request.form.get("email")
         username = request.form.get("username")
-        password1 = request.form.get("password1")
+        password1 = request.form.get("password")
         password2 = request.form.get("password2")
 
         email_exists = User.query.filter_by(email=email).first()
@@ -39,14 +71,6 @@ def signUp():
             flash('Tento email již někdo používá.', category='error')
         elif username_exists:
             flash('Tahle přezdívka již je zabrána.', category='error')
-        elif password1 != password2:
-            flash('Hesla se musí shodovat!', category='error')
-        elif len(username) < 2:
-            flash('Přezdívka je příliš krátká.', category='error')
-        elif len(password1) < 6:
-            flash('Heslo je příliš krátké.', category='error')
-        elif len(email) < 4:
-            flash("Tohle není validní emailová adressa.", category='error')
         else:
             admin = "user"
             if email == 'monikachadimova15@gmail.com':
@@ -55,8 +79,11 @@ def signUp():
                 password1, method='sha256'), tel_number="", town="", street="", psc="", status=admin)
             db.session.add(new_user)
             db.session.commit()
+            user = User.query.filter_by(email=email).first()
+            user.token = generate_password_hash(str(user.id) + str(user.date_created), method='sha256')
+            db.session.commit()
             login_user(new_user, remember=True)
-            flash('Účet vytvořen!')
+            flash('Účet vytvořen!', category='success')
             return redirect(url_for('views.home'))
     return render_template("register_page.html", user=current_user)
 

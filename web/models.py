@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     street = db.Column(db.String(150))
     psc = db.Column(db.String(150))
     status = db.Column(db.String(150))
+    token = db.Column(db.String(150))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     posts = db.relationship('Post', backref='user', passive_deletes=True)
 

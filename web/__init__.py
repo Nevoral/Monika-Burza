@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from .flash_toastr import Toastr
 from os import path
 from flask_login import LoginManager
 
@@ -8,6 +9,7 @@ DB_NAME = "database.db"
 
 def create_app():
     app =  Flask(__name__)
+    toastr = Toastr(app)
     app.config['SECRET_KEY'] = 'idontcare'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -33,6 +35,6 @@ def create_app():
     return app
 
 def create_database(app):
-    if not path.exists("website/" + DB_NAME):
+    if not path.exists("web/" + DB_NAME):
         db.create_all(app=app)
         print("Created database!")

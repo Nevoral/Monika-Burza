@@ -15,12 +15,14 @@
       {% endif %}
       onclick="openCity(event, 'reg')">Registrace prodejců
     </button>
-    <button class="tablinks"
-      {% if tab == "3" %}
-        id="defaultOpen"  
-      {% endif %}
-      onclick="openCity(event, 'inf')">Informace o burze
-    </button>
+    {% if user.status == "admin" %}
+      <button class="tablinks"
+        {% if tab == "3" %}
+          id="defaultOpen"  
+        {% endif %}
+        onclick="openCity(event, 'inf')">Informace o burze
+      </button>
+    {% endif %}
   </div>
 
   <div class="tabcontent" 
@@ -28,7 +30,10 @@
     <form method = "POST" 
       action='/admin'>
       <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+        <span class="input-group-text" 
+          id="basic-addon1">
+          <i class="bi bi-search"></i>
+        </span>
         <input class="form-control" 
           type="text" 
           placeholder='Zadej ID položky'
@@ -75,9 +80,9 @@
               </td>
               <td>
                 {% if post.status %}
-                  <span class="glyphicon glyphicon-ok"></span>
+                <i class="bi bi-check-lg"></i>
                 {% else %}
-                  <span class="glyphicon glyphicon-remove"></span>
+                <i class="bi bi-x-lg"></i>
                 {% endif %}
               </td>
               <td>{{ post.name }}</td>
@@ -89,7 +94,7 @@
                 <a href="/create_product/{{post.id}}">
                   <button class="btn btn-outline btn-info" 
                     type="button">
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <i class="bi bi-pencil"></i>
                   </button>
                 </a>
               </td>
@@ -101,7 +106,7 @@
         value='buyer' 
         name='action' 
         type="submit">
-        <span class="glyphicon glyphicon-print"></span> Vytisknout fakturu kupujicimu
+        <i class="bi bi-printer-fill"></i> Vytisknout fakturu kupujicimu
       </button>
     </form>
   </div>
@@ -111,9 +116,9 @@
     <form method = "POST" 
       action='/admin'>
       <div class="input-group">
-        <span class="input-group-addon">
-          <i class="glyphicon glyphicon-search">
-          </i>
+        <span class="input-group-text" 
+          id="basic-addon1">
+          <i class="bi bi-search"></i>
         </span>
         <input class="form-control" 
           type="text"
@@ -164,17 +169,17 @@
               </td>
               <td>
                 {% if post.bring %}
-                <span class="glyphicon glyphicon-ok"></span>
+                <i class="bi bi-check-lg"></i></span>
                 {% else %}
-                <span class="glyphicon glyphicon-remove"></span>
+                <i class="bi bi-x-lg"></i>
                 {% endif %}
               </td>
               <td>{{ post.author }}</td>
               <td>
                 {% if post.status %}
-                  <span class="glyphicon glyphicon-ok"></span>
+                <i class="bi bi-check-lg"></i>
                 {% else %}
-                  <span class="glyphicon glyphicon-remove"></span>
+                <i class="bi bi-x-lg"></i>
                 {% endif %}
               </td>
               <td>{{ post.name }}</td>
@@ -186,7 +191,7 @@
                 <a href="/create_product/{{post.id}}">
                     <button class="btn btn-outline btn-info" 
                       type="button">
-                      <span class="glyphicon glyphicon-pencil"></span>
+                      <i class="bi bi-pencil"></i>
                     </button>
                 </a>
               </td>
@@ -198,13 +203,13 @@
         value='bring' 
         name='action' 
         type="submit">
-        <span class="glyphicon glyphicon-apple"></span> Přinesené věci
+        <i class="bi bi-box"></i> Přinesené věci
       </button>
       <button class="btn btn-outline btn-default" 
         value='seller' 
         name='action' 
         type="submit">
-        <span class="glyphicon glyphicon-print"></span> Vytisknout fakturu prodejci
+        <i class="bi bi-printer-fill"></i> Vytisknout fakturu prodejci
       </button>
     </form>
   </div>
@@ -214,9 +219,9 @@
     <form method = "POST" 
       action='/admin'>
       <div class="input-group">
-        <span class="input-group-addon">
-          <i class="glyphicon glyphicon-search">
-          </i>
+        <span class="input-group-text" 
+          id="basic-addon1">
+          <i class="bi bi-search"></i>
         </span>
         <input class="form-control" 
           type="text"
@@ -239,14 +244,22 @@
           {% for userp in users %}
             <tr>    
               <td>{{ userp.email }}</td>
-              <td>{{ userp.status }}</td>
+              <td>
+                {% if userp.status == "user" %}
+                  <i class="bi bi-person-fill"></i> {{ userp.status }}
+                {% elif userp.status == "seller" %}
+                  <i class="bi bi-cart4"></i> {{ userp.status }}
+                {% elif userp.status == "admin" %}
+                  <i class="bi bi-trophy-fill"></i> {{ userp.status }}
+                {% endif %}
+                </td>
               {% if userp.email != "monikachadimova15@gmail.com" %}
                 {% if userp.status == "user" %}
                   <td>
                     <a href="/make_seller/{{userp.id}}">
                       <button class="btn btn-outline btn-default" 
                         type="button">
-                        <span class="glyphicon glyphicon-shopping-cart"></span> Prodávající
+                        <i class="bi bi-cart4"></i> Prodávající
                       </button>
                     </a>
                   </td>
@@ -255,13 +268,13 @@
                     <a href="/make_admin/{{userp.id}}">
                       <button class="btn btn-outline btn-default" 
                         type="button">
-                        <span class="glyphicon glyphicon-king"></span> Admin
+                        <i class="bi bi-trophy-fill"></i> Admin
                       </button>
                     </a>
                     <a href="/make_user/{{userp.id}}">
                       <button class="btn btn-outline btn-default" 
                         type="button">
-                        <span class="glyphicon glyphicon-user"></span> User
+                        <i class="bi bi-person-fill"></i> User
                       </button>
                     </a>
                   </td>
@@ -270,7 +283,7 @@
                     <a href="/make_seller/{{userp.id}}">
                       <button class="btn btn-outline btn-default" 
                         type="button">
-                        <span class="glyphicon glyphicon-shopping-cart"></span> Prodávající
+                        <i class="bi bi-cart4"></i> Prodávající
                       </button>
                     </a>
                   </td>

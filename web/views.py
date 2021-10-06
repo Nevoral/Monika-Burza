@@ -64,7 +64,7 @@ def create_product(username):
         label = request.form.get("label")
         price = request.form.get("price")
         if name == "" or color == "" or size == "" or price == "":
-            flash('Musíte vyplnit všechna pole s "*"', category = 'error')
+            flash('Musíte vyplnit všechna pole označena "*"', category = 'error')
             return redirect(url_for('views.create_product', username=username))
         try:
             cislo = float(price)
@@ -398,7 +398,7 @@ def make_admin(id):
     user = User.query.filter_by(id=id).first()
     user.status = "admin"
     db.session.commit()
-    flash('Prodejce byl změněn', category='success')
+    flash('Hodnost uživatele byla změněna', category='success')
     return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='3')
 
 @views.route("/make_seller/<id>")
@@ -407,7 +407,7 @@ def make_seller(id):
     user = User.query.filter_by(id=id).first()
     user.status = "seller"
     db.session.commit()
-    flash('Prodejce byl změněn', category='success')
+    flash('Hodnost uživatele byla změněna', category='success')
     return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='3')
 
 @views.route("/make_user/<id>")
@@ -416,5 +416,5 @@ def make_user(id):
     user = User.query.filter_by(id=id).first()
     user.status = "user"
     db.session.commit()
-    flash('Prodejce byl změněn', category='success')
+    flash('Hodnost uživatele byla změněna', category='success')
     return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='3')

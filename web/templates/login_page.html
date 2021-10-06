@@ -1,35 +1,50 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-
-<div class = "log_reg">
-  <h3>Přihlášení</h3>
-  <br/>
-  <form method="POST">
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-        <input class="form-control" 
-          type="text" 
-          id="email"
-          name="email"
-          placeholder="Vložte email">
-      </div>
-      <br/>
-      <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-        <input class="form-control" 
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Zadejte heslo">
-      </div>
-      <br/>
-      <a id = "forget_pass" class="text-muted"><small>Zapomenuté heslo</small></a>
-      <div>
-        <button id = "button1" class="btn btn-default" type="submit">Přihlásit</button>
-      </div>
+<div class="container">
+	<div class="header">
+		<h2>Přihlášení k účtu</h2>
+	</div>
+	<form id="form_log" class="form" method="POST">
+		<div class="form-control">
+			<input type="email" 
+        id="email" 
+        name="email" 
+        onchange="checkInputsEmail()"
+        autocomplete='off'
+        required>
+      <label for="email"
+        class="label-name">
+        <span class="content-name">Email</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<input type="password" 
+        id="password" 
+        name="password" 
+        onchange="checkInputsPassword()"
+        autocomplete='off'
+        required>
+      <label for="password"
+        class="label-name">
+        <span class="content-name">Heslo</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    <div class="tacbox">
+      <label for="terms">
+        <a href="{{ url_for('auth.forgotten') }}">Zapomenuté heslo</a>
+      </label> 
     </div>
-  </form>
+		<button type="submit" 
+      id="btn_log_submit"
+      disabled>Přihlásit
+    </button>
+	</form>
 </div>
 {% endblock %}

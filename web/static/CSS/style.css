@@ -1,156 +1,341 @@
-.navbar-brand{
-    margin-left: 1%;
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,500&display=swap');
+* {
+	box-sizing: border-box;
+}
+body {
+	background-color: #F79C35;
+	font-family: 'Open Sans', sans-serif;
+	display: flex;
+	align-items: center;
+    overflow-x: hidden;
+	justify-content: center;
+	min-height: 100vh;
+	margin: 0;
+}
+.container {
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	overflow: hidden;
+	width: 450px;
+	max-width: 100%;
 }
 
-.log_reg{
-    margin: 5% auto 0;
-    width: 20vw;
-    height: auto;
-    text-align: center;
+.header {
+	border-bottom: 1px solid #f0f0f0;
+	background-color: #f7f7f7;
+	padding: 20px 40px;
 }
 
-.log_reg h3{
-    margin: 3% 0 0;
+.header h2 {
+	margin: 0;
 }
 
-.form_label{
-    text-align: left;
-    display: block;
-    width: 90%;
-    height: 1.3em;
-    margin: 5% 5% 3%;
+.form {
+	padding: 30px 40px;	
+    
 }
 
-.input_bar{
-    width: 90%;
-    height: 2.2em;
-    margin: 0 auto;
-    text-align: left;
+.form-control {
+    margin-bottom: 30px;
+	padding-bottom: 20px;
+    width: 100%;
+    height: 60px;
+	position: relative;
+    overflow: hiden;
 }
 
-#button1{
-    display: block;
-    width: 80%;
-    margin: 5% auto 0;
+.form-control label {
+	position: absolute;
+    bottom: 20px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-bottom: 3px solid #c27115;
+}
+.form-control label::after{
+    content: '';
+    position: absolute;
+    left: 0px;
+    bottom: -1px;
+    height: 100%;
+    width: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
 }
 
-#forget_pass{
-    margin-top: 3%;
-    display: block;
-    width: auto;
-    height: auto;
+.form-control input {
+	border: none;
+    color: #595f6e;
+	font-family: inherit;
+	font-size: 14px;
+	padding-top: 15px;
+    padding-bottom: 10px;
+	width: 100%;
+    height: 100%;
+    outline: none;
+}
+.content-name {
+    position: absolute;
+    bottom:5px;
+    left: 0px;
+    transition: all 0.3s ease;
 }
 
-
-#profil{
-    width: 45vw;
-    height: auto; 
+.form-control input:focus + .label-name .content-name,
+.form-control input:valid + .label-name .content-name {
+	transform: translateY(-150%);
+	font-size: 14px;
+    color: #c27115;
 }
 
-.input_bar_x2{
+.form-control input:focus + .label-name::after,
+.form-control input:valid + .label-name::after {
+	transform: translateX(0%);
+}
+
+.form-control.success label {
+	border-color: #2ecc71;
+}
+
+.form-control.error label {
+	border-color: #e74c3c;
+}
+
+.form-control i {
+	visibility: hidden;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.form-control.success i.bi-check-circle-fill {
+	color: #2ecc71;
+	visibility: visible;
+}
+
+.form-control.error i.bi-x-circle-fill {
+	color: #e74c3c;
+	visibility: visible;
+}
+
+.form-control small {
+	color: #e74c3c;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	visibility: hidden;
+}
+
+.form-control.error small {
+	visibility: visible;
+}
+
+.form button {
+	background-color: #c27115;
+	border: 2px solid #c27115;
+	border-radius: 4px;
+	color: #fff;
+	display: block;
+	font-family: inherit;
+	font-size: 16px;
+	padding: 10px;
+	margin-top: 20px;
+	width: 100%;
+}
+.form button:hover {
+	background-color: #F79C35;
+	border: 2px solid #F79C35;
+	border-radius: 4px;
+	color: #fff;
+	display: block;
+	font-family: inherit;
+	font-size: 16px;
+	padding: 10px;
+	margin-top: 20px;
+	width: 100%;
+}
+.form button:disabled, button[disabled] {
+	background-color: #c4a98b;
+	border: 2px solid #c4a98b;
+	border-radius: 4px;
+	color: #fff;
+	display: block;
+	font-family: inherit;
+	font-size: 16px;
+	padding: 10px;
+	margin-top: 20px;
+	width: 100%;
+}
+.tacbox {
+    width: 100%;
+    position: relative;
+    height: 30px;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+.tacbox input {
+    height: 20px;
+    position: relative;
+    width: 20px;
+    border-radius: 4px;
+    vertical-align: middle;
+  }
+.tacbox label {
+    position: relative;
+    font-family: inherit;
+	font-size: 14px;
+    top: 2px;
+	left: 5px;
+}
+/*header a navbar*/
+
+*,
+*::before,
+*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: background-color .5s ease;
+    z-index: 1000;
+}
+
+.container_navbar{
+    width: 100%;
+}
+
+.nav{
+    width: 100%;
+    height: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #c27115;
+    box-shadow: 0 3px 1rem rgba(0,0,0,.3);
+    border-bottom: 2px solid rgba(255,255,255,.05);
+    transition: height .5s ease;
+}
+
+.nav a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    vertical-align: center;
+}
+
+.nav .logo{
+    font-size: 22px;
+    font-weight: bold;
+    vertical-align: center;
+    transform: translateX(-100rem);
+    animation: slideIn .5s forwards;
+}
+
+.nav-list{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    vertical-align: center;
+    transform: translateX(100rem);
+    animation: slideIn .5s forwards;
+}
+.log-list{
+    list-style: none;
+    display: flex;
+    align-items: right;
+    vertical-align: center;
+    transform: translateX(100rem);
+    animation: slideIn .5s forwards;
+}
+.log-list .nav-link {
+    position: absolute;
+    margin-top: 16px;
+    margin-inline-start: -8rem;
+}
+
+.nav-link{
+    margin: 0 2rem;
+    position: relative;
+}
+
+.nav-link::after{
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    box-shadow: 0 3px 1rem rgba(0,0,0,.5);
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .5s ease;
+}
+
+.nav-link:hover::after{
+    transform: scaleX(1);
+    box-shadow: 0 3px 1rem rgba(0,0,0,.5);
+}
+
+#nav-cta{
     display: inline-block;
-    width: 40%;
-    height: 2.2em;
-    margin: 0 4%;
-    text-align: left;
+    background-color: #fff;
+    color: #313131;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 3px 1rem rgba(0,0,0,.3);
+    transition: background-color .5s ease;
 }
 
-.input_bar_left{
-    display: inline-block;
-    width: 40%;
-    height: 2.2em;
-    margin: 0 4%;
-    margin: 0 52% 0 4%;
-}
-
-.form_label_x2{
-    display: inline-block;
-    text-align: left;
-    width: 40%;
-    height: 1.3em;
-    margin: 3% 4% 3%;
-}
-
-.form_label_left{
-    display: inline-block;
-    text-align: left;
-    width: 40%;
-    height: 1.3em;
-    margin: 3% 52% 3% 4%;
+#nav-cta:hover{
+    background-color: #d3d3d3;
 }
 
 
-#menu_bar{
-    width: 95%;
-    height: 2,5em;
-    margin: 5px auto;
+/*Apply styles after scroll*/
+.scrolling-active{
+    background-color: hsla(0, 0%, 100%, 0.377);
+    box-shadow: 0 3px 1rem rgba(0,0,0,.1);
 }
 
-#Add{
-    background-color: rgb(51, 204, 51);
-    border-color: rgb(0, 153, 0);
-    color: white;
+.scrolling-active .nav{
+    height: 90px;
+    border-radius: 40px;
 }
 
-#Delete{
-    background-color: rgb(255, 80, 80);
-    border-color: rgb(255, 0, 0);
-    color: white;
+.scrolling-active .nav a{
+    color: #313131;
 }
 
-#Print_labels{
-    margin-left: 62%;
-    background-color: rgb(0, 102, 255);
-    border-color: rgb(0, 51, 204);
-    color: white;
+.scrolling-active #nav-cta{
+    background-color: #313131;
+    color: #fff;
 }
 
-#Print_list{
-    background-color: rgb(0, 204, 255);
-    border-color: rgb(0, 51, 204);
-    color: white;
-}
-* {box-sizing: border-box}
-
-/* Style the tab */
-.tab {
-  float: left;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-  width: 10%;
-  height: 100%;
+.scrolling-active #nav-cta:hover{
+    background-color: #151515;
 }
 
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  display: block;
-  background-color: inherit;
-  color: black;
-  padding: 22px 16px;
-  width: 100%;
-  border: none;
-  outline: none;
-  text-align: left;
-  cursor: pointer;
-  transition: 0.3s;
+.scrolling-active .nav-link::after{
+    background-color: #313131;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current "tab button" class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  float: left;
-  padding: 0px 12px;
-  border: 1px solid #ccc;
-  width: 90%;
-  border-left: none;
-  height: 100%;
+/*Apply styles after scroll end*/
+@keyframes slideIn {
+    from{
+    }
+    to{
+        transform: translateX(0);
+    }
 }

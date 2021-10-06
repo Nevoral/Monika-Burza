@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title%}Nástěnka{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="header">
+		<h2>Obnoveni hesla</h2>
+	</div>
+	<form id="form_reset" class="form" method="POST">
+		<div class="form-control">
+		    <input type="email" 
+                id="email" 
+                name="email" 
+                onchange="checkInputsEmail()"
+                autocomplete='off'
+                value="{{ user.email }}"
+                required>
+            <label for="email"
+                class="label-name">
+                <span class="content-name">Email</span>
+            </label>
+	        <i class="bi bi-check-circle-fill"></i>
+	        <i class="bi bi-x-circle-fill"></i>
+	        <small>Error message</small>
+	    </div>
+        <div class="form-control">
+            <input type="password" 
+                id="password" 
+                name="password" 
+                onchange="checkInputsPassword()"
+                autocomplete='off'
+                required>
+            <label for="password"
+                class="label-name">
+                <span class="content-name">Heslo</span>
+            </label>
+            <i class="bi bi-check-circle-fill"></i>
+            <i class="bi bi-x-circle-fill"></i>
+            <small>Error message</small>
+        </div>
+        <div class="form-control">
+            <input type="password" 
+                id="password2" 
+                name="password2" 
+                onchange="checkInputsPassword2()"
+                autocomplete='off'
+                required>
+            <label for="password2"
+                class="label-name">
+                <span class="content-name">Kontrola hesla</span>
+            </label>
+            <i class="bi bi-check-circle-fill"></i>
+            <i class="bi bi-x-circle-fill"></i>
+            <small>Error message</small>
+        </div>
+		<button type="submit" 
+            id="btn_reset_submit"
+            disabled>Obnovit heslo
+        </button>
+	</form>
+</div>
+{% endblock %}

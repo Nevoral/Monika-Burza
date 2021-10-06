@@ -1,52 +1,86 @@
 {% extends "base.html" %}
 {% block title%}Nástěnka{% endblock %}
 {% block content %}
-
-<div class = "log_reg">
-  <h3>Registrace</h3>
-  <br/>
-  <form method="POST">
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-        <input class="form-control" 
-          type="text" 
-          id="email"
-          name="email"
-          placeholder="Vložte email">
-      </div>
-      <br/>
-      <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <input class="form-control" 
-          type="text" 
-          id="username"
-          name="username"
-          placeholder="Zvol si uživatelské jméno">
-      </div>
-      <br/>
-      <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-        <input class="form-control" 
-          type="password"
-          id="password1"
-          name="password1"
-          placeholder="Zadejte heslo">
-      </div>
-      <br/>
-      <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-        <input class="form-control" 
-          type="password"
-          id="password2"
-          name="password2"
-          placeholder="Zopakuj heslo">
-      </div>
-      <br/>
-      <div>
-        <button id = "button1" class="btn btn-primary" type="submit">Registrovat</button>
-      </div>
+<div class="container">
+	<div class="header">
+		<h2>Registrace účtu</h2>
+	</div>
+	<form id="form_reg" class="form" method="POST">
+		<div class="form-control">
+      <input type="text" 
+        id="username" 
+        name="username" 
+        onchange="checkInputsName()"
+        autocomplete='off'
+        required>
+			<label for="username" 
+        class="label-name">
+        <span class="content-name">Uživatelské jméno</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<input type="email" 
+        id="email" 
+        name="email" 
+        onchange="checkInputsEmail()"
+        autocomplete='off'
+        required>
+      <label for="email"
+        class="label-name">
+        <span class="content-name">Email</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<input type="password" 
+        id="password" 
+        name="password" 
+        onchange="checkInputsPassword()"
+        autocomplete='off'
+        required>
+      <label for="password"
+        class="label-name">
+        <span class="content-name">Heslo</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<input type="password" 
+        id="password2" 
+        name="password2" 
+        onchange="checkInputsPassword2()"
+        autocomplete='off'
+        required>
+      <label for="password2"
+        class="label-name">
+        <span class="content-name">Kontrola hesla</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    <div class="tacbox">
+      <input type="checkbox" 
+        name="terms" 
+        id="terms" 
+        onChange="checkInputsTerms()"
+        autocomplete='off'
+        required>
+      <label for="terms"> Souhlasím s 
+        <a href="#">Pravidly a Podmínkami</a>
+      </label> 
     </div>
-  </form>
+		<button type="submit" 
+      id="btn_reg_submit" 
+      disabled>Registrovat
+    </button>
+	</form>
 </div>
 {% endblock %}
