@@ -7,16 +7,22 @@ body {
 	background-color: #F79C35;
 	font-family: 'Open Sans', sans-serif;
 	display: flex;
-	align-items: center;
     overflow-x: hidden;
 	justify-content: center;
 	min-height: 100vh;
 	margin: 0;
 }
-.container {
+.container-content {
+    margin-top: 100px;
+    padding: 25px;
+}
+.container-alone {
+    margin-top: 100px;
+    position: center;
+    align-items: center;
 	background-color: #fff;
 	border-radius: 5px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 3px 4rem rgba(0, 0, 0, 0.3);
 	overflow: hidden;
 	width: 450px;
 	max-width: 100%;
@@ -190,6 +196,11 @@ body {
     top: 2px;
 	left: 5px;
 }
+
+.tacbox a{
+    text-decoration: none;
+}
+
 /*header a navbar*/
 
 *,
@@ -305,13 +316,15 @@ header{
 
 /*Apply styles after scroll*/
 .scrolling-active{
-    background-color: hsla(0, 0%, 100%, 0.377);
-    box-shadow: 0 3px 1rem rgba(0,0,0,.1);
+    background-color: hsla(0, 0%, 100%, 0);
 }
 
 .scrolling-active .nav{
+    background-color: #c2711586;
     height: 90px;
-    border-radius: 40px;
+    width: 98%;
+    border-radius: 45px;
+    margin: 0 auto;
 }
 
 .scrolling-active .nav a{
@@ -331,11 +344,247 @@ header{
     background-color: #313131;
 }
 
-/*Apply styles after scroll end*/
 @keyframes slideIn {
     from{
     }
     to{
         transform: translateX(0);
     }
+}
+
+/*Hoverable table */
+
+.container-product {
+    background-color: #fff;
+	border-radius: 1rem;
+	box-shadow: 0 3px 4rem rgba(0, 0, 0, 0.3);
+	overflow: hidden;
+	width: 1150px;
+	max-width: 100%;
+}
+
+.header-table {
+	border-bottom: 1px solid #a5a5a5;
+	background-color: #dddddd;
+	padding: 20px 40px;
+}
+
+.header h2 {
+	margin: 0;
+}
+
+.form-table {
+	padding: 30px 15px;	
+    
+}
+.pdf-button {
+    padding: 1rem 1.5rem;
+}
+
+#add-prod{
+    display: inline-block;
+    background-color: rgb(182, 46, 46);
+    color: #ffffff;
+    padding: .8rem 1.4rem;
+    font-size: 14px;
+    border-radius: 1.6rem;
+    box-shadow: 0 3px 1rem rgba(0, 0, 0, 0.3);
+    transition: background-color .5s ease;
+}
+
+#add-prod:hover{
+    background-color: rgb(224, 73, 73);
+    font-size: 16px;
+}
+
+.pdf-button a{
+    text-decoration: none;
+}
+
+.pdf-button #Print_labels {
+	background-color: #1566c2;
+	border: 2px solid #1566c2;
+	border-radius: 1.4rem;
+	color: #fff;
+	font-family: inherit;
+    margin-left: 620px;
+	font-size: 14px;
+	padding: .7rem 1.4rem;
+}
+.pdf-button #Print_labels:hover {
+	background-color: #2781e7;
+	border: 2px solid #2781e7;
+	border-radius: 1.4rem;
+	color: #fff;
+	font-family: inherit;
+	font-size: 16px;
+	padding: .7rem 1.4rem;
+}
+.pdf-button #Print_list {
+	background-color: #07448a;
+	border: 2px solid #07448a;
+	border-radius: 1.4rem;
+	color: #fff;
+	font-family: inherit;
+	font-size: 14px;
+	padding: .7rem 1.4rem;
+}
+.pdf-button #Print_list:hover {
+	background-color: #0f57a8;
+	border: 2px solid #0f57a8;
+	border-radius: 1.4rem;
+	color: #fff;
+	font-family: inherit;
+	font-size: 16px;
+	padding: .7rem 1.4rem;
+}
+
+table {
+    position: relative;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #bdc3c7;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+}
+
+table i.bi-check-circle-fill {
+	color: #2ecc71;
+	visibility: visible;
+    margin: 0 auto;
+}
+
+table i.bi-x-circle-fill {
+	color: #e74c3c;
+	visibility: visible;
+}
+
+table #table-button-del {
+    display: inline-block;
+    background-color: rgb(182, 46, 46);
+    color: #ffffff;
+    padding: .4rem .8rem;
+    font-size: 14px;
+    border-radius: 1.6rem;
+    box-shadow: 0 3px 1rem rgba(0, 0, 0, 0.3);
+    transition: background-color .5s ease;
+}
+
+table #table-button-del:hover{
+    background-color: rgb(224, 73, 73);
+    font-size: 16px;
+}
+
+table #table-button-update {
+    display: inline-block;
+    background-color: rgb(21, 124, 35);
+    color: #ffffff;
+    padding: .4rem .8rem;
+    font-size: 14px;
+    border-radius: 1.6rem;
+    box-shadow: 0 3px 1rem rgba(0, 0, 0, 0.3);
+    transition: background-color .5s ease;
+}
+
+table #table-button-update:hover{
+    background-color: rgb(37, 165, 54);
+    font-size: 16px;
+}
+
+.table-row {
+    transition: all .2s ease-in;
+    cursor: pointer;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#head {
+    background-color: #16a085;
+    color: #fff;
+}
+
+h1 {
+    font-weight: 600;
+    text-align: center;
+    background-color: #16a085;
+    color: #fff;
+    padding: 10px 0px;
+}
+
+.table-row:hover {
+    background-color: #f5f5f5;
+    transform: scale(1.02);
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+}
+.table-row.checked:hover {
+    background-color: #5ed668a6;
+    transform: scale(1.02);
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (max-width: 768px) {
+    table {
+        width: 90%;
+    }
+}
+
+footer{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    transition: background-color .5s ease;
+    z-index: 1000;
+}
+
+.container-img {
+    width: 100%;
+    height: 25px;
+}
+
+.container-footer{
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #c27115;
+    box-shadow: 0 3px 1rem rgba(0,0,0,.3);
+    border-bottom: 2px solid rgba(255,255,255,.05);
+    transition: height .5s ease;
+}
+
+.container-social {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.socials {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    vertical-align: center;
+    transform: translateX(100rem);
+    animation: slideIn .5s forwards;
+}
+
+.socials a {
+    text-decoration: none;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    margin-top: 5px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    color: #fff;
+    vertical-align: center;
 }

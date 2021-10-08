@@ -146,6 +146,41 @@ function isEmail(email) {
 }
 window.addEventListener('scroll', function () {
   let header = document.querySelector('header');
+  let footer = document.querySelector('footer');
   let windowPosition = window.scrollY > 0;
   header.classList.toggle('scrolling-active', windowPosition);
+  footer.classList.toggle('scrolling-active', windowPosition);
 })
+
+function markOnClick(elem) {
+  var checkbox = elem.querySelector('td>input');
+  checkbox.checked = !checkbox.checked;
+  if(checkbox.checked) {
+    elem.style.backgroundColor = '#5ed668a6';
+    elem.style.transform = 'scale(1.02)';
+    elem.style.boxShadow =  '2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2)';
+  } else {
+    elem.style.backgroundColor = '';
+    elem.style.transform = 'scale(1)';
+    elem.style.boxShadow =  '2px 2px 12px rgba(0, 0, 0, 0), -1px -1px 8px rgba(0, 0, 0, 0)';
+  }
+}
+
+function selectAll() {
+  var dataTable = document.getElementById('table');
+  var checkItAll = dataTable.querySelector('input[name="select_all"]');
+  var inputs = dataTable.querySelectorAll('tr');
+  console.log(inputs);
+        
+  checkItAll.addEventListener('change', function() {
+    if (checkItAll.checked) {
+      inputs.forEach(function(input) {
+        markOnClick(input);
+      });  
+    } else {
+      inputs.forEach(function(input) {
+        markOnClick(input);
+      });  
+    }
+  });
+}
