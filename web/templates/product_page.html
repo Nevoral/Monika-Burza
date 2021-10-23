@@ -1,78 +1,78 @@
 {% extends "base.html" %}
-{% block title%}Nástěnka{% endblock %}
+{% block title%}Burza Kněžice - Tvé produkty{% endblock %}
+{% block leftcontent %}{% endblock %}
 {% block content %}
-<div class="container-product">
-	<div class="header-table">
-		<h2>Seznam produktů</h2>
-	</div>
-    <form method="POST" class="form-table" action="{{ url_for('views.print_user_table', username=username) }}">
-        <div class="pdf-button">
-            <a href="{{ url_for('views.create_product', username=username) }}" id="add-prod">
-                <i class="bi bi-plus-lg"></i> Přidat zboží
-            </a>
-            <button class="btn btn-default" 
-                value='stitek' 
-                name='action' 
-                type="submit" 
-                id = "Print_labels">
-                <i class="bi bi-printer-fill"></i> Tisk štítků
-            </button>
-            <button class="btn btn-default" 
-                value='tabulka' 
-                name='action' 
-                type="submit" 
-                id = "Print_list">
-                <i class="bi bi-printer-fill"></i> Tisk seznamu
-            </button>
-        </div>
-        <div class="container-table">
-            <table id='table'>
-                <tr id="head">
-                    <th>
-                        <input name="select_all" type="checkbox" onchange="selectAll()">
-                    </th>
-                    <th>Prodáno</th>
-                    <th>Název</th>
-                    <th>Barva</th>
-                    <th>Velikost</th>
-                    <th>Popis</th>
-                    <th>Cena</th>
-                    <th></th>
-                </tr>
-                {% for post in posts %}
-                    <tr onclick="markOnClick(this)" class="table-row" id="{{ post.id }}">    
-                        <td>
-                            <input class="hidden-checkbox" 
-                                type="checkbox" 
-                                value="{{ post.id }}" 
-                                id="flexCheckDefault" 
-                                hidden
-                                name='checkID'>
-                        </td>
-                        <td>
-                            {% if post.status %}
-                            <i class="bi bi-check-circle-fill"></i>
-                            {% else %}
-                            <i class="bi bi-x-circle-fill"></i>
-                            {% endif %}
-                        </td>
-                        <td>{{ post.name }}</td>
-                        <td>{{ post.color }}</td>
-                        <td>{{ post.size }}</td>
-                        <td>{{ post.label }}</td>
-                        <td>{{ post.price }}Kč</td>
-                        <td>
-                            <a href="/create_product/{{post.id}}" id="table-button-update">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <a href="/delete_product/{{post.id}}" id="table-button-del">
-                                <i class="bi bi-trash-fill"></i>
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %} 
-            </table>
-        </div>
-    </form>
+<div class="header-table">
+	<h2>Seznam produktů</h2>
 </div>
+<form method="POST" class="form-table" action="{{ url_for('views.print_user_table', username=username) }}">
+    <div class="pdf-button">
+        <a href="{{ url_for('views.create_product', username=username) }}" id="add-prod">
+            <i class="bi bi-plus-lg"></i> Přidat zboží
+        </a>
+        <button class="btn btn-default" 
+            value='stitek' 
+            name='action' 
+            type="submit" 
+            id = "Print_labels">
+            <i class="bi bi-printer-fill"></i> Tisk štítků
+        </button>
+        <button class="btn btn-default" 
+            value='tabulka' 
+            name='action' 
+            type="submit" 
+            id = "Print_list">
+            <i class="bi bi-printer-fill"></i> Tisk seznamu
+        </button>
+    </div>
+    <div class="container-table">
+        <table id='table'>
+            <tr id="head">
+                <th>
+                    <input name="select_all" type="checkbox" onchange="selectAll()">
+                </th>
+                <th>Prodáno</th>
+                <th>Název</th>
+                <th>Barva</th>
+                <th>Velikost</th>
+                <th>Popis</th>
+                <th>Cena</th>
+                <th></th>
+            </tr>
+            {% for post in posts %}
+                <tr onclick="markOnClick(this)" class="table-row" id="{{ post.id }}">    
+                    <td>
+                        <input class="hidden-checkbox" 
+                            type="checkbox" 
+                            value="{{ post.id }}" 
+                            id="flexCheckDefault" 
+                            hidden
+                            name='checkID'>
+                    </td>
+                    <td>
+                        {% if post.status %}
+                        <i class="bi bi-check-circle-fill"></i>
+                        {% else %}
+                        <i class="bi bi-x-circle-fill"></i>
+                        {% endif %}
+                    </td>
+                    <td>{{ post.name }}</td>
+                    <td>{{ post.color }}</td>
+                    <td>{{ post.size }}</td>
+                    <td>{{ post.label }}</td>
+                    <td>{{ post.price }}Kč</td>
+                    <td>
+                        <a href="/create_product/{{post.id}}" id="table-button-update">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="/delete_product/{{post.id}}" id="table-button-del">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %} 
+        </table>
+    </div>
+</form>
 {% endblock %}
+{% block rightcontent %}{% endblock %}

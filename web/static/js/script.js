@@ -146,17 +146,17 @@ function isEmail(email) {
 }
 window.addEventListener('scroll', function () {
   let header = document.querySelector('header');
-  let footer = document.querySelector('footer');
+  /* let footer = document.querySelector('footer'); */
   let windowPosition = window.scrollY > 0;
   header.classList.toggle('scrolling-active', windowPosition);
-  footer.classList.toggle('scrolling-active', windowPosition);
+  /* footer.classList.toggle('scrolling-active', windowPosition); */
 })
 
 function markOnClick(elem) {
   var checkbox = elem.querySelector('td>input');
   checkbox.checked = !checkbox.checked;
   if(checkbox.checked) {
-    elem.style.backgroundColor = '#5ed668a6';
+    elem.style.backgroundColor = '#5ED668';
     elem.style.transform = 'scale(1.02)';
     elem.style.boxShadow =  '2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2)';
   } else {
@@ -166,9 +166,9 @@ function markOnClick(elem) {
   }
 }
 
-function selectAll() {
-  var dataTable = document.getElementById('table');
-  var checkItAll = dataTable.querySelector('input[name="select_all"]');
+function selectAll(tableID, name) {
+  var dataTable = document.getElementById(tableID);
+  var checkItAll = dataTable.querySelector(name);
   var inputs = dataTable.querySelectorAll('tr');
   console.log(inputs);
         
@@ -183,4 +183,45 @@ function selectAll() {
       });  
     }
   });
+}
+
+function myMap() {
+  const api_url = 'http://127.0.0.1:5000/get-location/1'
+  getLoc();
+  async function getLoc() {
+    const response = await fetch(api_url);
+    const data = await response.json();
+    const { x, y } = data
+    const map = new google.maps.Map(document.getElementById("googleMap"),{
+      center: new google.maps.LatLng(x, y),
+      zoom: 17,
+    });
+    /* const image = ''; */
+    const beachMarker = new google.maps.Marker({
+      position: { lat: x, lng: y },
+      map
+      /* icon: image, */
+    });
+  }
+}
+function filter(position, inputID, tableID) {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById(inputID);
+  filter = input.value.toUpperCase();
+  table = document.getElementById(tableID);
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[position];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
 }

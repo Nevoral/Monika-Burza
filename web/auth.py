@@ -10,6 +10,7 @@ auth = Blueprint("auth", __name__)
 def forgotten():
     if request.method == 'POST':
         email = request.form.get('email')
+        email = email.lower()
         user = User.query.filter_by(email=email).first()
         if user:
             flash('Email s odkazen byl zaslán na váš email.', category='success')
@@ -35,13 +36,13 @@ def reset(token):
     return render_template("reset_page.html", user=user)
 
 def sendEmail(user):
-    pass
-    #return redirect(url_for('auth.reset', token=user.token))
+    return redirect(url_for('auth.login'))
 
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form.get("email")
+        email = email.lower()
         password = request.form.get("password")
 
         user = User.query.filter_by(email=email).first()
@@ -60,9 +61,9 @@ def login():
 def signUp():
     if request.method == 'POST':
         email = request.form.get("email")
+        email = email.lower()
         username = request.form.get("username")
         password1 = request.form.get("password")
-        password2 = request.form.get("password2")
 
         email_exists = User.query.filter_by(email=email).first()
         username_exists = User.query.filter_by(username=username).first()

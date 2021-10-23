@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response
 from flask_login import login_required, current_user
-from .models import Post, User
+from .models import Post, User, Burza
 from . import db
 import fpdf
 import os
@@ -148,7 +148,7 @@ def delete_sell():
         if post.status:
             posts.remove(post)
     flash('Prodané položky byly schovány.', category='success')
-    return redirect(url_for('views.admin', tab = '3'))
+    return redirect(url_for('views.admin', tab = '4'))
 
 @views.route("/unmarked_bring")
 @login_required
@@ -158,7 +158,7 @@ def unmarked_bring():
         if post.status:
             post.status = False
     flash('Neprodané položky byly zpět označené za nepřítomné.', category='success')
-    return redirect(url_for('views.admin', tab = '3'))
+    return redirect(url_for('views.admin', tab = '4'))
 
 @views.route("/sold/<id>")
 @login_required
@@ -166,7 +166,7 @@ def sold(id):
     post = Post.query.filter_by(id=id).first()
     post.status = not post.status
     db.session.commit()
-    return render_template("admin_page.html", user=current_user, posts=Post.query.all(), username=current_user.username, tab='1')
+    return render_template("admin_page.html", user=current_user, posts=Post.query.all(), username=current_user.username, tab='2')
 
 @views.route("/admin", methods=['GET', 'POST'])
 @login_required
@@ -176,7 +176,7 @@ def admin():
         if request.form.get('action') == 'buyer':
             id_list = request.form.getlist('checkID')
             if id_list == []:
-                return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
+                return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='2')
             tot_price = 0
             #hlavička faktury
             for i in id_list:
@@ -190,11 +190,11 @@ def admin():
                     db.session.commit()
             #přidíní celkové částky k zaplacení
             flash('Položky byly označeny za prodané', category='success')
-            return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
+            return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='2')
         elif request.form.get('action') == 'seller':
             id_user = request.form.get('userID')
             if id_user == "":
-                return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='2')
+                return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
             user = User.query.filter_by(id = id_user).first()
             posts = user.posts
             tot_price = 0
@@ -212,7 +212,7 @@ def admin():
             #přidíní celkové částky k zaplacení
             tot_price = tot_price * 0.9
             flash('Položky byly označeny za prodané', category='success')
-            return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='2')
+            return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
         elif request.form.get('action') == 'bring':
             id_list = request.form.getlist("checkID")
             for i in id_list:
@@ -224,9 +224,9 @@ def admin():
                     post.bring = True
                     db.session.commit()
             flash('Položky byly označeny.', category='success')
-            return render_template("admin_page.html", user=current_user, posts=find_posts, username=username, tab='2')
+            return render_template("admin_page.html", user=current_user, posts=find_posts, username=username, tab='1')
         else:
-            return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='3')
+            return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=find_posts, username=current_user.username, tab='4')
     return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=find_posts, username=current_user.username, tab='1')
 
 @views.route("/table_pdf/<username>", methods=['GET', 'POST'])
@@ -390,7 +390,7 @@ def bring(id):
         db.session.commit()
         flash('Položka byla označena.', category='success')
 
-    return render_template("admin_page.html", user=current_user, posts=Post.query.all(), username=current_user.username, tab='2')
+    return render_template("admin_page.html", user=current_user, posts=Post.query.all(), username=current_user.username, tab='1')
 
 @views.route("/make_admin/<id>")
 @login_required
@@ -399,7 +399,7 @@ def make_admin(id):
     user.status = "admin"
     db.session.commit()
     flash('Hodnost uživatele byla změněna', category='success')
-    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='3')
+    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='4')
 
 @views.route("/make_seller/<id>")
 @login_required
@@ -408,7 +408,7 @@ def make_seller(id):
     user.status = "seller"
     db.session.commit()
     flash('Hodnost uživatele byla změněna', category='success')
-    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='3')
+    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='4')
 
 @views.route("/make_user/<id>")
 @login_required
@@ -417,4 +417,10 @@ def make_user(id):
     user.status = "user"
     db.session.commit()
     flash('Hodnost uživatele byla změněna', category='success')
-    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='3')
+    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='4')
+
+@views.route("/get-location/<int:id>")
+def display_route(id):
+    burza = Burza.query.get(id)
+    return {"x": burza.xLoc, "y": burza.yLoc}
+

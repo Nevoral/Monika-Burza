@@ -33,3 +33,5 @@ class Burza(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime(timezone = True), default=func.now())
     place = db.Column(db.String(150))
+    xLoc = db.Column(db.String(30))
+    yLoc = db.Column(db.String(30))

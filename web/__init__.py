@@ -21,7 +21,7 @@ def create_app():
     from .auth import auth
     app.register_blueprint(auth, url_prefix="/")
 
-    from .models import User, Post
+    from .models import User, Post, Burza
     create_database(app)
 
     login_manager = LoginManager()
