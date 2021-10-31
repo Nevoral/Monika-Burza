@@ -434,6 +434,8 @@ def make_user(id):
 @views.route("/get-location")
 def display_route():
     info = Burza.query.all()
+    if not info:
+         return {"x": 49.27059858195231, "y": 15.673170651983284}
     best = 0
     for i in info:
         if best < i.id:

@@ -192,10 +192,6 @@ function myMap() {
     const response = await fetch(api_url);
     const data = await response.json();
     const { x, y } = data
-    if (x === null ) {
-      x = 49.27059858195231
-      y = 15.673170651983284
-    }
     const map = new google.maps.Map(document.getElementById("googleMap"),{
       center: new google.maps.LatLng(x, y),
       zoom: 17,
