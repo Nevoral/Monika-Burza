@@ -186,7 +186,7 @@ function selectAll(tableID, name) {
 }
 
 function myMap() {
-  const api_url = 'http://127.0.0.1:5000/get-location'
+  const api_url = 'https://burzaknezice.herokuapp.com/get-location'
   getLoc();
   async function getLoc() {
     const response = await fetch(api_url);
