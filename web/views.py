@@ -10,13 +10,19 @@ views = Blueprint("views", __name__)
 @views.route("/")
 @views.route("/home")
 def home():
+    info = Burza.query.all()
+    best = 0
+    for i in info:
+        if best < i.id:
+            best = i.id
+    info = Burza.query.filter_by(id = best).first()
     posts = Post.query.all()
     posts.reverse()
     for i in posts:
         if i.status:
             posts.remove(i)
     posts = posts[:15]
-    return render_template("main_page.html", user=current_user, posts=posts)
+    return render_template("main_page.html", user=current_user, posts=posts, info = info)
 
 @views.route("/create_product/<id>", methods=['GET', 'POST'])
 @login_required
@@ -192,15 +198,19 @@ def admin():
             flash('Položky byly označeny za prodané', category='success')
             return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='2')
         elif request.form.get('action') == 'seller':
-            id_user = request.form.get('userID')
+            id_user = int(request.form.get('search'), base = 10)
             if id_user == "":
                 return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
             user = User.query.filter_by(id = id_user).first()
             posts = user.posts
+            print('/////////////////////////')
+            print(type(posts))
+            print('/////////////////////////')
             tot_price = 0
             #hlavička faktury
             for i in posts:
                 post = Post.query.filter_by(id = i).first()
+                print(post)
                 if post.status:
                     tot_price += float(post.price)
                 if not post:
@@ -224,7 +234,7 @@ def admin():
                     post.bring = True
                     db.session.commit()
             flash('Položky byly označeny.', category='success')
-            return render_template("admin_page.html", user=current_user, posts=find_posts, username=username, tab='1')
+            return render_template("admin_page.html", user=current_user, posts=find_posts, username=current_user.username, tab='1')
         else:
             return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=find_posts, username=current_user.username, tab='4')
     return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=find_posts, username=current_user.username, tab='1')
@@ -419,8 +429,13 @@ def make_user(id):
     flash('Hodnost uživatele byla změněna', category='success')
     return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='4')
 
-@views.route("/get-location/<int:id>")
-def display_route(id):
-    burza = Burza.query.get(id)
+@views.route("/get-location")
+def display_route():
+    info = Burza.query.all()
+    best = 0
+    for i in info:
+        if best < i.id:
+            best = i.id
+    burza = Burza.query.get(best)
     return {"x": burza.xLoc, "y": burza.yLoc}
 

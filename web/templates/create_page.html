@@ -1,8 +1,58 @@
-{% extends "base.html" %}
-{% block title%}NBurza Kněžice - Produkt{% endblock %}
-{% block leftcontent %}{% endblock %}
+{% extends "auth_base.html" %}
+{% block title%}Burza Kněžice - Přihlášení{% endblock %}
 {% block content %}
-<div class = "log_reg">
+<div class="container-alone">
+	<div class="header">
+		{% if not post %}
+      <h2>Přidat nové zboží do seznamu</h2>
+    {% else %}
+      <h2>Upravit zboží ze seznamu</h2>
+    {% endif %}
+	</div>
+	<form id="form_create" class="form" method="POST">
+		<div class="form-control">
+			<input type="email" 
+        id="email" 
+        name="email" 
+        onchange="checkInputsEmail()"
+        autocomplete='off'
+        required>
+      <label for="email"
+        class="label-name">
+        <span class="content-name">Email</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<input type="password" 
+        id="password" 
+        name="password" 
+        onchange="checkInputsPassword()"
+        autocomplete='off'
+        required>
+      <label for="password"
+        class="label-name">
+        <span class="content-name">Heslo</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    <div class="tacbox">
+      <label for="terms">
+        <a href="{{ url_for('auth.forgotten') }}">Zapomenuté heslo</a>
+      </label> 
+    </div>
+		<button type="submit" 
+      id="btn_log_submit"
+      disabled>Přihlásit
+    </button>
+	</form>
+</div>
+{% endblock %}
+<!-- <div class = "log_reg">
   {% if not post %}
     <h3>Přidat nové zboží do seznamu</h3>
   {% else %}
@@ -126,4 +176,4 @@
   </form>
 </div>
 {% endblock %}
-{% block rightcontent %}{% endblock %}
+{% block rightcontent %}{% endblock %} -->

@@ -2,11 +2,27 @@
 {% block title%}Burza Kněžice - Prodejní pult{% endblock %}
 {% block content %}
 <div class="content">
-
-  <input class="hide" type="radio" name="slider" checked id="reg">
-  <input class="hide" type="radio" name="slider" id="sell">
-  <input class="hide" type="radio" name="slider" id="event">
-  <input class="hide" type="radio" name="slider" id="rights">
+  {% if tab=='1' %}
+    <input class="hide" type="radio" name="slider" checked id="reg">
+    <input class="hide" type="radio" name="slider" id="sell">
+    <input class="hide" type="radio" name="slider" id="event">
+    <input class="hide" type="radio" name="slider" id="rights">
+  {% elif tab=='2' %}
+    <input class="hide" type="radio" name="slider" id="reg">
+    <input class="hide" type="radio" name="slider" checked id="sell">
+    <input class="hide" type="radio" name="slider" id="event">
+    <input class="hide" type="radio" name="slider" id="rights">
+  {% elif tab=='3' %}
+    <input class="hide" type="radio" name="slider" id="reg">
+    <input class="hide" type="radio" name="slider" id="sell">
+    <input class="hide" type="radio" name="slider" checked id="event">
+    <input class="hide" type="radio" name="slider" id="rights">
+  {% elif tab=='4' %}
+    <input class="hide" type="radio" name="slider" id="reg">
+    <input class="hide" type="radio" name="slider" id="sell">
+    <input class="hide" type="radio" name="slider" id="event">
+    <input class="hide" type="radio" name="slider" checked id="rights">
+  {% endif %}
 
   <div class="list">
     <label for="reg" class="reg">
@@ -41,7 +57,7 @@
         <div class="box">
           <input type="checkbox" id="check">
           <div class="search-box">
-            <input id="search" type="text" placeholder="Zadej ID prodávajícího..." onkeyup="filter(2, 'search', 'table')">
+            <input name="search" id="search" type="text" placeholder="Zadej ID prodávajícího..." onkeyup="filter(2, 'search', 'table')">
             <label for="check" class="icon">
               <i class="bi bi-search"></i>
             </label>

@@ -31,7 +31,13 @@ class Post(db.Model):
 
 class Burza(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime(timezone = True), default=func.now())
+    date = db.Column(db.String(150))
     place = db.Column(db.String(150))
+    adress = db.Column(db.String(150))
     xLoc = db.Column(db.String(30))
     yLoc = db.Column(db.String(30))
+    numItem = db.Column(db.Integer)
+    numSeller = db.Column(db.Integer)
+    numSellItem = db.Column(db.Integer)
+    TotalProfit = db.Column(db.Integer)
+
