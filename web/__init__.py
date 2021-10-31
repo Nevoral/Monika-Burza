@@ -9,7 +9,7 @@ DB_NAME = "database.db"
 
 def create_app():
     app =  Flask(__name__)
-    toastr = Toastr(app)
+    #toastr = Toastr(app)
     app.config['SECRET_KEY'] = 'idontcare'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
