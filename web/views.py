@@ -7,8 +7,10 @@ import os
 
 views = Blueprint("views", __name__)
 
-@views.route("/")
 @views.route("/home")
+def home2():
+    return redirect(url_for('views.home'))
+@views.route("/")
 def home():
     info = Burza.query.all()
     best = 0
