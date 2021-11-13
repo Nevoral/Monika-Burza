@@ -1,0 +1,94 @@
+{% extends "auth_base.html" %}
+{% block title%}Burza Kněžice - Event{% endblock %}
+{% block content %}
+<div class="container-cr">
+    <div class="header">
+      <h2>Událost</h2>
+    </div>
+    <form method = "POST" class="form" action="{{ url_for('views.event') }}">
+      <div class="form-control">
+        <input type="text" 
+          id="date" 
+          name="date" 
+          onchange="checkInputsName('date')"
+          autocomplete='off'
+          required>
+        <label for="date"
+          class="label-name">
+          <span class="content-name">Datum a čas</span>
+        </label>
+        <i class="bi bi-check-circle-fill"></i>
+        <i class="bi bi-x-circle-fill"></i>
+        <small>Error message</small>
+      </div>
+      <div class="form-control">
+        <input type="text" 
+          id="place" 
+          name="place" 
+          onchange="checkInputsName('place')"
+          autocomplete='off'
+          required>
+        <label for="place"
+          class="label-name">
+          <span class="content-name">Místo konání</span>
+        </label>
+        <i class="bi bi-check-circle-fill"></i>
+        <i class="bi bi-x-circle-fill"></i>
+        <small>Error message</small>
+      </div>
+      <div class="form-control">
+        <input type="text" 
+          id="address" 
+          name="address" 
+          onchange="checkInputsName('address')"
+          autocomplete='off'
+          required>
+        <label for="address"
+          class="label-name">
+          <span class="content-name">Adresa</span>
+        </label>
+        <i class="bi bi-check-circle-fill"></i>
+        <i class="bi bi-x-circle-fill"></i>
+        <small>Error message</small>
+      </div>
+      <div class="form-control">
+        <input type="text" 
+          id="gps-x" 
+          name="gps-x" 
+          onchange="checkInputsName('gps-x')"
+          autocomplete='off'
+          required>
+        <label for="gps-x"
+          class="label-name">
+          <span class="content-name">GPS x koordináty</span>
+        </label>
+        <i class="bi bi-check-circle-fill"></i>
+        <i class="bi bi-x-circle-fill"></i>
+        <small>Error message</small>
+      </div>
+      <div class="form-control">
+        <input type="text" 
+          id="gps-y" 
+          name="gps-y" 
+          onchange="checkInputsName('gps-y')"
+          autocomplete='off'
+          required>
+        <label for="gps-y"
+          class="label-name">
+          <span class="content-name">GPS y koordináty</span>
+        </label>
+        <i class="bi bi-check-circle-fill"></i>
+        <i class="bi bi-x-circle-fill"></i>
+        <small>Error message</small>
+      </div>
+      <div class="pdf-button">
+        <button
+          value='event' 
+          name='action' 
+          type="submit">
+          <i class="bi bi-save"></i> Uložit
+        </button>
+      </div>
+    </form>
+</div>
+{% endblock %}
