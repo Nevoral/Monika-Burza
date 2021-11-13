@@ -10,6 +10,7 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 def home2():
     return redirect(url_for('views.home'))
+
 @views.route("/")
 def home():
     info = Burza.query.all()
@@ -30,7 +31,7 @@ def home():
 @login_required
 def update_product(id):
     if request.method == "POST":
-        name = request.form.get("name")
+        name = request.form.get("label")
         color = request.form.get("color")
         size = request.form.get("size")
         label = request.form.get("label")
@@ -66,10 +67,10 @@ def update_product(id):
 @login_required
 def create_product(username):
     if request.method == "POST":
-        name = request.form.get("name")
+        name = request.form.get("label")
         color = request.form.get("color")
         size = request.form.get("size")
-        label = request.form.get("label")
+        label = request.form.get("popis")
         price = request.form.get("price")
         if name == "" or color == "" or size == "" or price == "":
             flash('Musíte vyplnit všechna pole označena "*"', category = 'error')
@@ -147,6 +148,22 @@ def profile(username):
         db.session.commit()
         return redirect(url_for('views.home'))
     return render_template("profile_page.html", user=current_user, username=username)
+
+@views.route("/event", methods=['GET', 'POST'])
+@login_required
+def event():
+    if request.method == 'POST':
+        date = request.form.get("date")
+        place = request.form.get("place")
+        address = request.form.get("address")
+        gps_x = request.form.get("gps-x")
+        gps_y = request.form.get("gps-y")
+        new_event = Burza(date=date, place=place, adress=address, xLoc=gps_x, yLoc=gps_y, numItem=0, 
+            numSeller=0, numSellItem=0, TotalProfit=0)
+        db.session.add(new_event)
+        db.session.commit()
+        return redirect(url_for('views.home'))
+    return render_template("event.html", user=current_user)
 
 @views.route("/delete_sell")
 @login_required

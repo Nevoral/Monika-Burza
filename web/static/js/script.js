@@ -1,12 +1,29 @@
-function checkInputsName() {
-  const username = document.getElementById('username');
+function checkInputsName(name) {
+  const username = document.getElementById(name);
   const usernameValue = username.value.trim();
   if(usernameValue === '') {
     setErrorFor(username, 'Uživatelské jméno nemůže být prázdné.');
-  } else if (usernameValue.length < 3) {
+  } else if (usernameValue.length < 3 & name === "username") {
     setErrorFor(username, 'Uživatelské jméno je příliš krátké.');
   } else {
     setSuccessFor(username);
+    checkInputsTerms()
+  }
+}
+function checkInputsPrice() {
+  const prices = document.getElementById('price');
+  const priceValue = prices.value.trim();
+  var lowerCaseLetters = /[a-z]/g;
+  var upperCaseLetters = /[A-Z]/g;
+  var price = /[0-9]/g;
+  if(priceValue === '') {
+    setErrorFor(prices, 'Cena nemůže být prázdná.');
+  } else if (priceValue.match(lowerCaseLetters)) {
+    setErrorFor(prices, 'Neplatná cena produktu.');
+  } else if (priceValue.match(upperCaseLetters)) {
+    setErrorFor(prices, 'Neplatná cena produktu.');
+  } else {
+    setSuccessFor(prices);
     checkInputsTerms()
   }
 }
@@ -57,8 +74,11 @@ function checkInputsPassword2() {
 }
 function checkInputsTerms() {
   var num = 0;
-  const email = document.getElementById('email');
-  const emailValue = email.value.trim();
+  var emailValue = 0;
+  if(!document.querySelector('#form_create')) {
+    const email = document.getElementById('email');
+    emailValue = email.value.trim();
+  }
   if(document.querySelector('#form_forg')) {
     if(isEmail(emailValue)) {
       document.getElementById("btn_forg_submit").disabled = false;

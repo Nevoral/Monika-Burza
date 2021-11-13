@@ -1,114 +1,123 @@
-{% extends "base.html" %}
+{% extends "auth_base.html" %}
 {% block title%}Burza Kněžice - Profil{% endblock %}
-{% block leftcontent %}{% endblock %}
 {% block content %}
-<form method="POST">
-  <div class = "log_reg" id = "profil">
-    <h3>Profil uživatele {{user.username}}</h3>
-    <br/>
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-text" 
-          id="basic-addon1">
-          <i class="bi bi-envelope-fill"></i>
-        </span>
-        <input class="form-control" 
-          type="text" 
-          id="email"
-          name="email"
-          {% if not user %}
-            placeholder="Zadejte email"
-          {% else %}
-            placeholder="{{user.email}}"
-          {% endif %}>
-      </div>
-      <br/>
-      <div class="input-group">
-        <span class="input-group-text" 
-          id="basic-addon1">
-          <i class="bi bi-person-fill"></i>
-        </span>
-        <input class="form-control" 
-          type="text" 
-          id="username"
-          name="username"
-          {% if not user %}
-            placeholder="Zadejte uživatelské jméno"
-          {% else %}
-            placeholder="{{user.username}}"
-          {% endif %}>
-      </div>
-      <br/>
-      <div class="input-group">
-        <span class="input-group-text" 
-          id="basic-addon1">
-          <i class="bi bi-telephone-fill"></i>
-        </span>
-        <input class="form-control" 
-          type="text"
-          id="tel_number"
-          name="tel_number"
-          {% if user.tel_number == "" %}
-            placeholder="Zadejte telefoní číslo"
-          {% else %}
-            placeholder="{{user.tel_number}}"
-          {% endif %}>
-      </div>
-      <br/>
-    <h3>Adresa uživatele {{user.username}}</h3>
-    <br/>
-    <div class="input-group">
-      <span class="input-group-text" 
-        id="basic-addon1">
-        <i class="bi bi-house-door-fill"></i>
-      </span>
-      <input class="form-control" 
-        type="text" 
-        id="town"
-        name="town"
-        {% if user.town == "" %}
-          placeholder="Zadejte město"
-        {% else %}
-          placeholder="{{user.town}}"
-        {% endif %}>
-    </div>
-    <br/>
-    <div class="input-group">
-      <span class="input-group-text" 
-        id="basic-addon1">
-        <i class="bi bi-signpost"></i>
-      </span>
-      <input class="form-control" 
-        type="text" 
-        id="street"
-        name="street"
-        {% if user.street == "" %}
-          placeholder="Zadejte ulici"
-        {% else %}
-          placeholder="{{user.street}}"
-        {% endif %}>
-    </div>
-    <br/>
-    <div class="input-group">
-      <span class="input-group-text" 
-        id="basic-addon1">
-        <i class="bi bi-pencil-fill"></i>
-      </span>
-      <input class="form-control" 
-        type="text"
-        id="psc"
-        name="psc"
-        {% if user.psc == "" %}
-          placeholder="Zadejte PSC"
-        {% else %}
-          placeholder="{{user.psc}}"
-        {% endif %}>
-    </div>
-    <br />
-    <div>
-      <button id = "button1" class="btn btn-primary" type="submit">Uložit</button>
-    </div>
-  </div>
-</form>
+<div class="container-prof">
+	<div class="header">
+    <h2>Upravit informace o profilu</h2>
+	</div>
+	<form id="form_profile" class="form" method="POST">
+		<div class="form-control">
+			<input type="email" 
+        id="email" 
+        name="email" 
+        {% if user.email != "" %}
+          value = "{{user.email}}"
+        {% endif %}
+        onchange="checkInputsEmail()"
+        autocomplete='off'
+        required>
+      <label for="email"
+        class="label-name">
+        <span class="content-name">Email</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    <div class="form-control">
+			<input type="username" 
+        id="username" 
+        name="username" 
+        {% if user.username != "" %}
+          value = "{{user.username}}"
+        {% endif %}
+        onchange="checkInputsName('username')"
+        autocomplete='off'
+        required>
+      <label for="username"
+        class="label-name">
+        <span class="content-name">Uživatelské jméno</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    <div class="form-control">
+			<input type="tel-number" 
+        id="tel-number" 
+        name="tel-number" 
+        {% if user.tel_number != "" %}
+          value = "{{user.tel_number}}"
+        {% endif %}
+        onchange="checkInputsName('tel-number')"
+        autocomplete='off'
+        required>
+      <label for="tel-number"
+        class="label-name">
+        <span class="content-name">Telefoní číslo</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+		<div class="form-control">
+			<input type="town" 
+        id="town" 
+        name="town" 
+        {% if user.town != "" %}
+          value = "{{user.town}}"
+        {% endif %}
+        onchange="checkInputsName('town')"
+        autocomplete='off'
+        required>
+      <label for="town"
+        class="label-name">
+        <span class="content-name">Město bydliště</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    <div class="form-control">
+			<input type="street" 
+        id="street" 
+        name="street" 
+        {% if user.street != "" %}
+          value = "{{user.street}}"
+        {% endif %}
+        onchange="checkInputsName('street')"
+        autocomplete='off'
+        required>
+      <label for="street"
+        class="label-name">
+        <span class="content-name">Ulice bydliště</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    <div class="form-control">
+			<input type="psc" 
+        id="psc" 
+        name="psc" 
+        {% if user.psc != "" %}
+          value = "{{user.psc}}"
+        {% endif %}
+        onchange="checkInputsName('psc')"
+        autocomplete='off'
+        required>
+      <label for="psc"
+        class="label-name">
+        <span class="content-name">PSČ</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+		<button type="submit" 
+      id="btn_prof_submit">
+      <i class="bi bi-save"></i> Uložit
+    </button>
+	</form>
+</div>
 {% endblock %}
-{% block rightcontent %}{% endblock %}

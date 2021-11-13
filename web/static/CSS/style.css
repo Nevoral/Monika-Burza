@@ -14,6 +14,7 @@ body {
 }
 .container-content {
     margin-top: 100px;
+    align-items: top;
     padding: 25px;
 }
 .container-alone {
@@ -607,7 +608,6 @@ footer{
 #right_block{
     display: inline-block;
     width: 360px;
-    height: 40px;
     margin-left:25px;
 }
 #container-info{
@@ -639,6 +639,24 @@ footer{
     margin-left: 5ch;
     width: 100%;
     height: 200px;
+}
+.main-update #table-button-update {
+    display: inline-block;
+    background-color: rgb(21, 124, 35);
+    color: #ffffff;
+    padding: .4rem .8rem;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 1.6rem;
+    box-shadow: 0 3px 1rem rgba(0, 0, 0, 0.3);
+    transition: background-color .5s ease;
+    position:absolute;
+    top: 130px;
+}
+
+.main-update #table-button-update:hover{
+    background-color: rgb(37, 165, 54);
+    font-size: 16px;
 }
 
 /* admin page  */
@@ -680,7 +698,6 @@ footer{
   }
   #reg:checked ~ .list label.reg,
   #sell:checked ~ .list label.sell,
-  #event:checked ~ .list label.event,
   #rights:checked ~ .list label.rights{
     color: #fff;
   }
@@ -704,11 +721,8 @@ footer{
   #sell:checked ~ .list .slider{
     top: 85px;
   }
-  #event:checked ~ .list .slider{
-    top: 145px;
-  }
   #rights:checked ~ .list .slider{
-    top: 205px;
+    top: 145px;
   }
   .content .text-content{
     background-color: #fff;
@@ -740,12 +754,10 @@ footer{
   }
   #reg:checked ~ .text-content .reg,
   #sell:checked ~ .text-content .sell,
-  #event:checked ~ .text-content .event,
   #rights:checked ~ .text-content .rights{
     display: block;
   }
   #sell:checked ~ .text-content .reg,
-  #event:checked ~ .text-content .reg,
   #rights:checked ~ .text-content .reg{
     display: none;
   }
@@ -868,4 +880,69 @@ footer{
 }
 #chicck {
     display: none;
+}
+
+/*profile page*/
+.container-prof {
+    position: center;
+    align-items: center;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 3px 4rem rgba(0, 0, 0, 0.3);
+	overflow: hidden;
+	width: 450px;
+	max-width: 100%;
+}
+/*create page*/
+.container-cr {
+    margin-top: 5px;
+    position: center;
+    align-items: center;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 3px 4rem rgba(0, 0, 0, 0.3);
+	overflow: hidden;
+	width: 450px;
+	max-width: 100%;
+}
+#button-center {
+    position: center;
+    align-items: center;
+    max-width: 100%;
+    text-align: center;
+    font-size: 20px;
+}
+
+#button-sell {
+    display: inline-block;
+    background-color: rgb(26, 141, 207);
+    color: #ffffff;
+    padding: .4rem .8rem;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 1.6rem;
+    box-shadow: 0 3px 1rem rgba(0, 0, 0, 0.3);
+    transition: background-color .5s ease;
+}
+
+#button-sell:hover {
+    background-color: rgb(21, 119, 175);
+    font-size: 16px;
+}
+
+#button-bring {
+    display: inline-block;
+    background-color: rgb(21, 124, 35);
+    color: #ffffff;
+    padding: .4rem .8rem;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 1.6rem;
+    box-shadow: 0 3px 1rem rgba(0, 0, 0, 0.3);
+    transition: background-color .5s ease;
+}
+
+#button-bring:hover {
+    background-color: rgb(37, 165, 54);
+    font-size: 16px;
 }

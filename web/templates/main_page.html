@@ -39,4 +39,12 @@
     </table>
 </div>
 {% endblock %}
-{% block rightcontent %}{% endblock %}
+{% block rightcontent %}
+{% if user.status == 'admin' %}
+    <div class='main-update'>
+        <a href="/event" id="table-button-update">
+            <i class="bi bi-pencil"></i>
+          </a> 
+    </div>
+{% endif %}
+{% endblock %}

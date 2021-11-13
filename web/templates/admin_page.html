@@ -5,22 +5,14 @@
   {% if tab=='1' %}
     <input class="hide" type="radio" name="slider" checked id="reg">
     <input class="hide" type="radio" name="slider" id="sell">
-    <input class="hide" type="radio" name="slider" id="event">
     <input class="hide" type="radio" name="slider" id="rights">
   {% elif tab=='2' %}
     <input class="hide" type="radio" name="slider" id="reg">
     <input class="hide" type="radio" name="slider" checked id="sell">
-    <input class="hide" type="radio" name="slider" id="event">
-    <input class="hide" type="radio" name="slider" id="rights">
-  {% elif tab=='3' %}
-    <input class="hide" type="radio" name="slider" id="reg">
-    <input class="hide" type="radio" name="slider" id="sell">
-    <input class="hide" type="radio" name="slider" checked id="event">
     <input class="hide" type="radio" name="slider" id="rights">
   {% elif tab=='4' %}
     <input class="hide" type="radio" name="slider" id="reg">
     <input class="hide" type="radio" name="slider" id="sell">
-    <input class="hide" type="radio" name="slider" id="event">
     <input class="hide" type="radio" name="slider" checked id="rights">
   {% endif %}
 
@@ -33,11 +25,6 @@
     <label for="sell" class="sell">
       <span class="icon"><i class="bi bi-cart4"></i></span>
       <span class="title"> Prodej</span>
-    </label>
-
-    <label for="event" class="event">
-      <span class="icon"><i class="bi bi-table"></i></span>
-      <span class="title"> Událost</span>
     </label>
 
     <label for="rights" class="rights">
@@ -123,14 +110,14 @@
           </table>
         </div>
         <div class="pdf-button">
-          <button class="btn btn-outline btn-default" 
+          <button
             value='bring' 
             name='action' 
             id="bring_stuff"
             type="submit">
             <i class="bi bi-box"></i> Přinesené věci
           </button>
-          <button class="btn btn-outline btn-default" 
+          <button
             value='seller' 
             name='action' 
             id="Print_list"
@@ -205,7 +192,7 @@
           </table>
         </div>
         <div class="pdf-button">
-          <button class="btn btn-outline btn-default" 
+          <button
             value='buyer' 
             name='action' 
             id="Print_list"
@@ -214,12 +201,6 @@
           </button>
         </div>
       </form>
-    </div>
-
-    <div class="event text">
-      <div class="header-table">
-        <h2>Událost</h2>
-      </div>
     </div>
 
     <div class="rights text">

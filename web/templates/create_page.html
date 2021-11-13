@@ -1,7 +1,7 @@
 {% extends "auth_base.html" %}
 {% block title%}Burza Kněžice - Produkt{% endblock %}
 {% block content %}
-<div class="container-alone">
+<div class="container-cr">
 	<div class="header">
 		{% if not post %}
       <h2>Přidat nové zboží do seznamu</h2>
@@ -11,168 +11,111 @@
 	</div>
 	<form id="form_create" class="form" method="POST">
 		<div class="form-control">
-			<input type="email" 
-        id="email" 
-        name="email" 
-        onchange="checkInputsEmail()"
+			<input type="label" 
+        id="label" 
+        name="label" 
+        {% if post %}
+          value ="{{post.name}}"
+        {% endif %}
+        onchange="checkInputsName('label')"
         autocomplete='off'
         required>
-      <label for="email"
+      <label for="label"
         class="label-name">
-        <span class="content-name">Email</span>
+        <span class="content-name">Název předmětu</span>
       </label>
 			<i class="bi bi-check-circle-fill"></i>
 			<i class="bi bi-x-circle-fill"></i>
 			<small>Error message</small>
 		</div>
-		<div class="form-control">
-			<input type="password" 
-        id="password" 
-        name="password" 
-        onchange="checkInputsPassword()"
+    <div class="form-control">
+			<input type="text" 
+        id="color" 
+        name="color"
+        {% if post %}
+          value ="{{post.color}}"
+        {% endif %} 
+        onchange="checkInputsName('color')"
         autocomplete='off'
         required>
-      <label for="password"
+      <label for="color"
         class="label-name">
-        <span class="content-name">Heslo</span>
+        <span class="content-name">Barva předmětu</span>
       </label>
 			<i class="bi bi-check-circle-fill"></i>
 			<i class="bi bi-x-circle-fill"></i>
 			<small>Error message</small>
 		</div>
-    <div class="tacbox">
-      <label for="terms">
-        <a href="{{ url_for('auth.forgotten') }}">Zapomenuté heslo</a>
-      </label> 
-    </div>
-		<button type="submit" 
-      id="btn_log_submit"
-      disabled>Přihlásit
-    </button>
-	</form>
-</div>
-{% endblock %}
-<!-- <div class = "log_reg">
-  {% if not post %}
-    <h3>Přidat nové zboží do seznamu</h3>
-  {% else %}
-    <h3>Upravit zboží ze seznamu</h3>
-  {% endif %}
-  <br />
-  <form method="POST">
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-text" 
-          id="basic-addon1">
-          <label>Název*</label>
-        </span>
-        <input class="form-control" 
-          type="text" 
-          id="name"
-          name="name"
-          {% if not post %}
-            placeholder="Název předmětu"
-          {% else %}
-            placeholder="{{post.name}}"
-          {% endif %}>
-      </div>
-      <br />
-      <div class="input-group">
-        <span class="input-group-text" 
-          id="basic-addon1">
-          <label>Barva*</label>
-        </span>
-        <input class="form-control" 
-          type="text" 
-          id="color"
-          name="color"
-          {% if not post %}
-            placeholder="Barva předmětu"
-          {% else %}
-            placeholder="{{post.color}}"
-          {% endif %}>
-      </div>
-      <br />
-      <div class="input-group">
-        <span class="input-group-text" 
-          id="basic-addon1">
-          <label>Velikost*</label>
-        </span>
-        <input class="form-control" 
-          type="text" 
-          id="size"
-          name="size"
-          {% if not post %}
-            placeholder="Vložte velikost"
-          {% else %}
-            placeholder="{{post.size}}"
-          {% endif %}>
-      </div>
-      <br />
-      <div class="input-group">
-        <span class="input-group-text" 
-          id="basic-addon1">
-          <label>Popis</label>
-        </span>
-        <textarea class="form-control"
-          name="label" 
-          id="label" 
-          {% if not post %}
-            placeholder="Napište popisek"
-          {% else %}
-            placeholder="{{post.label}}"
-          {% endif %}
-        ></textarea>
-      </div>
-      <br />
-      <div class="input-group">
-        <span class="input-group-text" 
-          id="basic-addon1">
-          <label>Cena*</label>
-        </span>
-        <input class="form-control" 
-          type="text" 
-          id="price"
-          name="price"
-          {% if not post %}
-            placeholder="Zadejte cenu"
-          {% else %}
-            placeholder="{{post.price}}"
-          {% endif %}>
-      </div>
-      {% if not not post %}
+    <div class="form-control">
+			<input type="size" 
+        id="size" 
+        name="size" 
+        {% if post %}
+          value ="{{post.size}}"
+        {% endif %}
+        onchange="checkInputsName('size')"
+        autocomplete='off'
+        required>
+      <label for="size"
+        class="label-name">
+        <span class="content-name">Velikost předmětu</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    <div class="form-control">
+			<input type="popis" 
+        id="popis" 
+        name="popis" 
+        {% if post %}
+          value ="{{post.label}}"
+        {% endif %}
+        onchange="checkInputsName('popis')"
+        autocomplete='off'
+        required>
+      <label for="popis"
+        class="label-name">
+        <span class="content-name">Popis</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    <div class="form-control">
+			<input type="price" 
+        id="price" 
+        name="price" 
+        {% if post %}
+          value ="{{post.price}}"
+        {% endif %}
+        onchange="checkInputsPrice()"
+        autocomplete='off'
+        required>
+      <label for="price"
+        class="label-name">
+        <span class="content-name">Cena produktu</span>
+      </label>
+			<i class="bi bi-check-circle-fill"></i>
+			<i class="bi bi-x-circle-fill"></i>
+			<small>Error message</small>
+		</div>
+    {% if post %}
         {% if user.status == 'admin' %}
-          <br />
-          <div>
-            <a href="/sold/{{post.id}}">
-              <button class="btn btn-default"
-                id = "sellbutton" 
-                type="button">
-                Prodáno
-              </button>
+          <div id="button-center">
+            <a href="/sold/{{post.id}}" id="button-sell">
+              <span>Prodáno</span>
             </a>
-            <a href="/bring/{{post.id}}">
-              <button class="btn btn-default"
-                id = "bringbutton" 
-                type="button">
-                Přineseno
-              </button>
+            <a href="/bring/{{post.id}}" id="button-bring">
+              <span>Přineseno</span>
             </a>
           </div>
         {% endif %}
       {% endif %}
-      <div>
-        <button class="btn btn-default"
-        id = "button1" 
-        type="submit">
-        {% if not post %}
-          Přidat zboží
-        {% else %}
-          Upravit zboží
-        {% endif %}
-      </button>
-      </div>
-    </div>
-  </form>
+		<button type="submit" 
+      id="btn_create_submit">
+      <i class="bi bi-save"></i> Uložit
+    </button>
+	</form>
 </div>
- -->
+{% endblock %}
