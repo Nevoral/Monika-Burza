@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_login import login_required, current_user
 from .models import Post, User, Burza
 from . import db
+from .auth import logout
 import fpdf
 import os
 
@@ -171,17 +172,32 @@ def delete_sell():
     posts = Post.query.all()
     for post in posts:
         if post.status:
-            posts.remove(post)
+            db.session.delete(post)
+            db.session.commit()
     flash('Prodané položky byly schovány.', category='success')
     return redirect(url_for('views.admin', tab = '4'))
+
+@views.route("/delete_user/<id>")
+@login_required
+def delete_user(id):
+    user = User.query.filter_by(id=id).first()
+    for post in user.posts:
+        db.session.delete(post)
+        db.session.commit()
+    flash('Prodané položky byly smazány.', category='success')
+    db.session.delete(user)
+    db.session.commit()
+    logout()
+    return redirect(url_for('views.home'))
 
 @views.route("/unmarked_bring")
 @login_required
 def unmarked_bring():
     posts = Post.query.all()
     for post in posts:
-        if post.status:
-            post.status = False
+        if post.bring:
+            post.bring = False
+    db.session.commit()
     flash('Neprodané položky byly zpět označené za nepřítomné.', category='success')
     return redirect(url_for('views.admin', tab = '4'))
 
@@ -292,39 +308,57 @@ def print_user_table(username):
             pdf.cell(columnW, th, 'Velikost', border=1, align='L')
             pdf.cell(columnW, th, 'Cena', border=1, align='R')
             pdf.ln(th)
-            for i in id_list:
+            for i in range(100):
+                pdf.cell(columnW, th, 'ID', border=1, align='L')
+                pdf.cell(columnW, th, 'Název', border=1, align='L')
+                pdf.cell(columnW, th, 'Barva', border=1, align='L')
+                pdf.cell(columnW, th, 'Velikost', border=1, align='L')
+                pdf.cell(columnW, th, 'Cena', border=1, align='R')
+                pdf.ln(th)
+            """ for i in id_list:
                 product = Post.query.filter_by(id=int(i)).first()
                 pdf.cell(columnW, th, str(product.id), border=1, align='L')
                 pdf.cell(columnW, th, str(product.name), border=1, align='L')
                 pdf.cell(columnW, th, str(product.color), border=1, align='L')
                 pdf.cell(columnW, th, str(product.size), border=1, align='L')
                 pdf.cell(columnW, th, str(product.price), border=1, align='R')
-                pdf.ln(th)
+                pdf.ln(th) """
             return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=seznam_polozek.pdf'})
         elif request.form.get('action') == 'stitek':
             pdf.set_font('NotoSans', '', 11)
             columnW = page_width/4
             th = pdf.font_size + 3
             k=0
+            j=0
             top = pdf.y
             start = pdf.x
             offset = pdf.x + columnW
             for i in id_list:
-                if k == 4:
-                    pdf.ln(th)
-                    pdf.ln(th)
-                    pdf.ln(th)
-                    top = pdf.y
-                    pdf.x = start
-                    offset = start + columnW
-                    k = 0
-                product = Post.query.filter_by(id=int(i)).first()
-                text = 'ID: ' + str(product.id) + '\nVelikost: ' + str(product.size) + '\nCena: ' + str(product.price) + ' Kč'
-                pdf.multi_cell(columnW, th, txt = text, border=1, align='J')
-                pdf.y = top
-                pdf.x = offset
-                offset += columnW
-                k += 1
+            #for i in range(100):
+                for p in range(2):
+                    if k == 4:
+                        pdf.ln(th)
+                        pdf.ln(th)
+                        pdf.ln(th)
+                        top = pdf.y
+                        pdf.x = start
+                        offset = start + columnW
+                        k = 0
+                        if j == 48:
+                            j=0
+                            pdf.add_page()
+                            top = pdf.y
+                            start = pdf.x
+                            offset = pdf.x + columnW
+                    product = Post.query.filter_by(id=int(i)).first()
+                    text = 'Věc ID: ' + str(product.id) + ' User ID: ' + str(product.author) + '\nVelikost: ' + str(product.size) + '\nCena: ' + str(product.price) + ' Kč'
+                    #text = 'ID: 69/89' + ' User ID: 59' + '\nVelikost: 15' '\nCena: 125' + ' Kč'
+                    pdf.multi_cell(columnW, th, txt = text, border=1, align='J')
+                    pdf.y = top
+                    pdf.x = offset
+                    offset += columnW
+                    k += 1
+                    j += 1
             return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=stitky.pdf'})
         else:
             flash('Něco proběhlo špatně, zkuste to znovu.', category='error')

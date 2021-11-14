@@ -891,7 +891,30 @@ footer{
 	box-shadow: 0 3px 4rem rgba(0, 0, 0, 0.3);
 	overflow: hidden;
 	width: 450px;
-	max-width: 100%;
+	max-width: 100%;   
+}
+.control-buttons {
+    display: inline-block;
+    padding: 1.2rem;
+    font-size: 1rem;
+
+}
+#delete-button {
+    background-color: rgb(21, 124, 35);
+    color: #ffffff;
+    padding: .4rem .8rem;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 1.6rem;
+    box-shadow: 0 3px 1rem rgba(0, 0, 0, 0.3);
+    transition: background-color .5s ease;
+    position:absolute;
+    top: 130px;
+}
+
+#delete-button:hover{
+    background-color: rgb(37, 165, 54);
+    font-size: 16px;
 }
 /*create page*/
 .container-cr {
