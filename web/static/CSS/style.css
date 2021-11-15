@@ -591,8 +591,6 @@ footer{
 /* main page */
 #left_block{
     display: inline-block;
-	overflow: hidden;
-    width: 360px;
     padding-left: 2rem;
     padding-top: 2rem;
 }
@@ -607,8 +605,7 @@ footer{
 }
 #right_block{
     display: inline-block;
-    width: 360px;
-    margin-left:25px;
+    vertical-align: top;
 }
 #container-info{
     padding-left: 3rem;
@@ -642,6 +639,8 @@ footer{
 }
 .main-update #table-button-update {
     display: inline-block;
+    width: 2.5rem;
+    height: 2rem;
     background-color: rgb(21, 124, 35);
     color: #ffffff;
     padding: .4rem .8rem;
@@ -650,11 +649,9 @@ footer{
     border-radius: 1.6rem;
     box-shadow: 0 3px 1rem rgba(0, 0, 0, 0.3);
     transition: background-color .5s ease;
-    position:absolute;
-    top: 130px;
 }
 
-.main-update #table-button-update:hover{
+.main-update #table-buttyon-update:hover{
     background-color: rgb(37, 165, 54);
     font-size: 16px;
 }
@@ -895,11 +892,12 @@ footer{
 }
 .control-buttons {
     display: inline-block;
-    padding: 1.2rem;
     font-size: 1rem;
-
+    width: 100%;
+    text-align: center;
 }
-#delete-button {
+.buttons{
+    display: block;
     background-color: rgb(21, 124, 35);
     color: #ffffff;
     padding: .4rem .8rem;
@@ -908,14 +906,49 @@ footer{
     border-radius: 1.6rem;
     box-shadow: 0 3px 1rem rgba(0, 0, 0, 0.3);
     transition: background-color .5s ease;
-    position:absolute;
-    top: 130px;
+}
+#delete-button {
+    position: relative;
+    margin: 1% auto 0 auto;
+    width: 40%;
+    text-align: center;
 }
 
 #delete-button:hover{
     background-color: rgb(37, 165, 54);
     font-size: 16px;
 }
+
+#delete-button2 {
+    display: inline-block;
+    position: relative;
+    margin: 0 2% 0 35%;
+    width: 30%;
+    text-align: center;
+}
+
+#delete-button2:hover{
+    background-color: rgb(37, 165, 54);
+    font-size: 16px;
+}
+
+#delete-button1 {
+    display: inline-block;
+    position: relative;
+    margin-left: 2%;
+    width: 30%;
+    text-align: center;
+}
+
+#delete-button1:hover {
+    background-color: rgb(37, 165, 54);
+    font-size: 16px;
+}
+
+#table-sell {
+    margin-top: 2%;
+}
+
 /*create page*/
 .container-cr {
     margin-top: 5px;
