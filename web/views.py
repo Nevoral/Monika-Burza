@@ -175,7 +175,7 @@ def delete_sell():
             db.session.delete(post)
             db.session.commit()
     flash('Prodané položky byly schovány.', category='success')
-    return redirect(url_for('views.admin', tab = '4'))
+    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='4')
 
 @views.route("/delete_user/<id>")
 @login_required
@@ -199,7 +199,7 @@ def unmarked_bring():
             post.bring = False
     db.session.commit()
     flash('Neprodané položky byly zpět označené za nepřítomné.', category='success')
-    return redirect(url_for('views.admin', tab = '4'))
+    return render_template("admin_page.html", users=User.query.all(), user=current_user, posts=Post.query.all(), username=current_user.username, tab='4')
 
 @views.route("/sold/<id>")
 @login_required
